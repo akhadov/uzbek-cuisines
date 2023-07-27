@@ -7,8 +7,8 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Folder Include="Common\Interfaces\" />
     <Folder Include="Constants\" />
-    <Folder Include="Repositories\" />
   </ItemGroup>
 
 </Project>

@@ -1,4 +1,4 @@
-﻿namespace UzbekCuisines.Domain.Identiyt;
+﻿namespace UzbekCuisines.Domain.Entities;
 
 public class User : BaseEntity
 {

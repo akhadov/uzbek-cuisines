@@ -1,4 +1,7 @@
 ﻿
+using MediatR;
+using UzbekCuisines.Application.Common.Behaviours;
+
 namespace UzbekCuisines.Application;
 
 public static class DependencyInjection
@@ -10,6 +13,7 @@ public static class DependencyInjection
             configuration.RegisterServicesFromAssembly(assembly));
 
         services.AddValidatorsFromAssembly(assembly);
+        services.AddTransient(typeof(IPipelineBehavior<,>), typeof(UnitOfWorkBehaviour<,>));
 
         return services;
     }

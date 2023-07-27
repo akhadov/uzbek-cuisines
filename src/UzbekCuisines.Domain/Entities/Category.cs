@@ -1,4 +1,4 @@
-﻿namespace UzbekCuisines.Domain.Catalog;
+﻿namespace UzbekCuisines.Domain.Entities;
 
 public class Category : Auditable
 {
