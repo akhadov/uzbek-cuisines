@@ -1,7 +1,6 @@
-﻿
-namespace UzbekCuisines.Domain.Common;
+﻿namespace UzbekCuisines.Domain.Common;
 
 public abstract class BaseEntity
 {
-    public long Id { get; set; }
+    public int Id { get; set; }
 }

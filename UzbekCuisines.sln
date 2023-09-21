@@ -11,9 +11,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "UzbekCuisines.Application",
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "UzbekCuisines.Infrastructure", "src\UzbekCuisines.Infrastructure\UzbekCuisines.Infrastructure.csproj", "{B03019DC-B33B-496A-B6BD-92E13D8B5B92}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "UzbekCuisines.Presentation", "src\UzbekCuisines.Presentation\UzbekCuisines.Presentation.csproj", "{C89B5BC3-F2FC-4BF1-843D-DDC7C2D1C22C}"
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "UzbekCuisines.WepApi", "src\UzbekCuisines.WepApi\UzbekCuisines.WepApi.csproj", "{EAF8D448-B96B-4B74-BD6A-F0C6190E774D}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "UzbekCuisines.WebUI", "src\UzbekCuisines.WebUI\UzbekCuisines.WebUI.csproj", "{58A87DEB-B18A-4031-810E-402638B75098}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -33,14 +31,10 @@ Global
 		{B03019DC-B33B-496A-B6BD-92E13D8B5B92}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{B03019DC-B33B-496A-B6BD-92E13D8B5B92}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{B03019DC-B33B-496A-B6BD-92E13D8B5B92}.Release|Any CPU.Build.0 = Release|Any CPU
-		{C89B5BC3-F2FC-4BF1-843D-DDC7C2D1C22C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{C89B5BC3-F2FC-4BF1-843D-DDC7C2D1C22C}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{C89B5BC3-F2FC-4BF1-843D-DDC7C2D1C22C}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{C89B5BC3-F2FC-4BF1-843D-DDC7C2D1C22C}.Release|Any CPU.Build.0 = Release|Any CPU
-		{EAF8D448-B96B-4B74-BD6A-F0C6190E774D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{EAF8D448-B96B-4B74-BD6A-F0C6190E774D}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{EAF8D448-B96B-4B74-BD6A-F0C6190E774D}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{EAF8D448-B96B-4B74-BD6A-F0C6190E774D}.Release|Any CPU.Build.0 = Release|Any CPU
+		{58A87DEB-B18A-4031-810E-402638B75098}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{58A87DEB-B18A-4031-810E-402638B75098}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{58A87DEB-B18A-4031-810E-402638B75098}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{58A87DEB-B18A-4031-810E-402638B75098}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -49,8 +43,7 @@ Global
 		{2C6F60F2-B6B9-4674-A197-0888844C8C54} = {8CD69A13-0DD8-4F79-8F19-80D7FCC9528E}
 		{1B8C3817-5C7D-40A2-8737-64142539FABA} = {8CD69A13-0DD8-4F79-8F19-80D7FCC9528E}
 		{B03019DC-B33B-496A-B6BD-92E13D8B5B92} = {8CD69A13-0DD8-4F79-8F19-80D7FCC9528E}
-		{C89B5BC3-F2FC-4BF1-843D-DDC7C2D1C22C} = {8CD69A13-0DD8-4F79-8F19-80D7FCC9528E}
-		{EAF8D448-B96B-4B74-BD6A-F0C6190E774D} = {8CD69A13-0DD8-4F79-8F19-80D7FCC9528E}
+		{58A87DEB-B18A-4031-810E-402638B75098} = {8CD69A13-0DD8-4F79-8F19-80D7FCC9528E}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {735AEFA3-9862-42FE-8FAB-894106060CB9}

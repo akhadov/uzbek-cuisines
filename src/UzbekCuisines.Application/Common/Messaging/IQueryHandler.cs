@@ -4,8 +4,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace UzbekCuisines.Domain.Repositories;
-
-public interface IFoodRepository
+namespace UzbekCuisines.Application.Common.Messaging
 {
+    internal interface IQueryHandler
+    {
+    }
 }

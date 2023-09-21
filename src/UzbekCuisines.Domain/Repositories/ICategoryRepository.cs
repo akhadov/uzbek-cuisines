@@ -4,9 +4,8 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace UzbekCuisines.Domain.Repositories
+namespace UzbekCuisines.Domain.Repositories;
+
+public interface ICategoryRepository
 {
-    internal interface ICategoryRepository
-    {
-    }
 }

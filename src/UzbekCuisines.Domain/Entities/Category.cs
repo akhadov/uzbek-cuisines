@@ -1,6 +1,6 @@
 ﻿namespace UzbekCuisines.Domain.Entities;
 
-public class Category : Auditable
+public class Category : BaseAuditableEntity
 {
     public string Name { get; set; }
 }

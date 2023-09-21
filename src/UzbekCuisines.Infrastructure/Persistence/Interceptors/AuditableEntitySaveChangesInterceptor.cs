@@ -4,8 +4,8 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace UzbekCuisines.Domain.Repositories;
+namespace UzbekCuisines.Infrastructure.Persistence.Interceptors;
 
-public interface IFoodRepository
+internal class AuditableEntitySaveChangesInterceptor
 {
 }

@@ -1,6 +1,6 @@
 ﻿
 
-namespace UzbekCuisines.Domain.Common.Interfaces;
+namespace UzbekCuisines.Application.Common;
 
 public interface IUnitOfWork
 {
