@@ -4,9 +4,8 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace UzbekCuisines.Application.Common.Messaging
+namespace UzbekCuisines.Application.Common.Messaging;
+
+public interface ICommand
 {
-    internal interface ICommand
-    {
-    }
 }

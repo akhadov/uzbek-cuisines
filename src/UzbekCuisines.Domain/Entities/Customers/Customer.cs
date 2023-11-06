@@ -4,8 +4,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace UzbekCuisines.Application.Common.Messaging;
-
-public interface IQuery
+namespace UzbekCuisines.Domain.Entities.Customers
 {
+    internal class Customer
+    {
+    }
 }
