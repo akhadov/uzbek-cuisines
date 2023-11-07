@@ -1,9 +1,14 @@
-﻿using UzbekCuisines.Domain.Entities.Products;
+﻿using System.ComponentModel.DataAnnotations.Schema;
+using UzbekCuisines.Domain.Entities.Products;
 
 namespace UzbekCuisines.Domain.Entities.Orders;
 
 public class LineItem
 {
+    public LineItem()
+    {
+        
+    }
     internal LineItem(LineItemId id, OrderId orderId, ProductId productId, Money price)
     {
         Id = id;

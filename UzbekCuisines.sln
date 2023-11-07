@@ -7,11 +7,9 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "src", "src", "{8CD69A13-0DD
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "UzbekCuisines.Domain", "src\UzbekCuisines.Domain\UzbekCuisines.Domain.csproj", "{2C6F60F2-B6B9-4674-A197-0888844C8C54}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "UzbekCuisines.Application", "src\UzbekCuisines.Application\UzbekCuisines.Application.csproj", "{1B8C3817-5C7D-40A2-8737-64142539FABA}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "UzbekCuisines.Persistence", "src\UzbekCuisines.Persistence\UzbekCuisines.Persistence.csproj", "{E4B2AE90-F6E2-43DA-8C04-F22E51D8EE16}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "UzbekCuisines.Infrastructure", "src\UzbekCuisines.Infrastructure\UzbekCuisines.Infrastructure.csproj", "{B03019DC-B33B-496A-B6BD-92E13D8B5B92}"
-EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "UzbekCuisines.WebUI", "src\UzbekCuisines.WebUI\UzbekCuisines.WebUI.csproj", "{58A87DEB-B18A-4031-810E-402638B75098}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "UzbekCuisines.Application", "src\UzbekCuisines.Application\UzbekCuisines.Application.csproj", "{1B1A1E73-7D6A-4F9B-89BB-FA60C4568948}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -23,27 +21,22 @@ Global
 		{2C6F60F2-B6B9-4674-A197-0888844C8C54}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{2C6F60F2-B6B9-4674-A197-0888844C8C54}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{2C6F60F2-B6B9-4674-A197-0888844C8C54}.Release|Any CPU.Build.0 = Release|Any CPU
-		{1B8C3817-5C7D-40A2-8737-64142539FABA}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{1B8C3817-5C7D-40A2-8737-64142539FABA}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{1B8C3817-5C7D-40A2-8737-64142539FABA}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{1B8C3817-5C7D-40A2-8737-64142539FABA}.Release|Any CPU.Build.0 = Release|Any CPU
-		{B03019DC-B33B-496A-B6BD-92E13D8B5B92}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{B03019DC-B33B-496A-B6BD-92E13D8B5B92}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{B03019DC-B33B-496A-B6BD-92E13D8B5B92}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{B03019DC-B33B-496A-B6BD-92E13D8B5B92}.Release|Any CPU.Build.0 = Release|Any CPU
-		{58A87DEB-B18A-4031-810E-402638B75098}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{58A87DEB-B18A-4031-810E-402638B75098}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{58A87DEB-B18A-4031-810E-402638B75098}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{58A87DEB-B18A-4031-810E-402638B75098}.Release|Any CPU.Build.0 = Release|Any CPU
+		{E4B2AE90-F6E2-43DA-8C04-F22E51D8EE16}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{E4B2AE90-F6E2-43DA-8C04-F22E51D8EE16}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{E4B2AE90-F6E2-43DA-8C04-F22E51D8EE16}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{E4B2AE90-F6E2-43DA-8C04-F22E51D8EE16}.Release|Any CPU.Build.0 = Release|Any CPU
+		{1B1A1E73-7D6A-4F9B-89BB-FA60C4568948}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{1B1A1E73-7D6A-4F9B-89BB-FA60C4568948}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{1B1A1E73-7D6A-4F9B-89BB-FA60C4568948}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{1B1A1E73-7D6A-4F9B-89BB-FA60C4568948}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
 	EndGlobalSection
 	GlobalSection(NestedProjects) = preSolution
 		{2C6F60F2-B6B9-4674-A197-0888844C8C54} = {8CD69A13-0DD8-4F79-8F19-80D7FCC9528E}
-		{1B8C3817-5C7D-40A2-8737-64142539FABA} = {8CD69A13-0DD8-4F79-8F19-80D7FCC9528E}
-		{B03019DC-B33B-496A-B6BD-92E13D8B5B92} = {8CD69A13-0DD8-4F79-8F19-80D7FCC9528E}
-		{58A87DEB-B18A-4031-810E-402638B75098} = {8CD69A13-0DD8-4F79-8F19-80D7FCC9528E}
+		{E4B2AE90-F6E2-43DA-8C04-F22E51D8EE16} = {8CD69A13-0DD8-4F79-8F19-80D7FCC9528E}
+		{1B1A1E73-7D6A-4F9B-89BB-FA60C4568948} = {8CD69A13-0DD8-4F79-8F19-80D7FCC9528E}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {735AEFA3-9862-42FE-8FAB-894106060CB9}
