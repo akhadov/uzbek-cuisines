@@ -1,4 +1,4 @@
-﻿
+
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.0.31903.59
@@ -9,7 +9,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "UzbekCuisines.Domain", "src
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "UzbekCuisines.Persistence", "src\UzbekCuisines.Persistence\UzbekCuisines.Persistence.csproj", "{E4B2AE90-F6E2-43DA-8C04-F22E51D8EE16}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "UzbekCuisines.Application", "src\UzbekCuisines.Application\UzbekCuisines.Application.csproj", "{1B1A1E73-7D6A-4F9B-89BB-FA60C4568948}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "UzbekCuisines.Application", "src\UzbekCuisines.Application\UzbekCuisines.Application.csproj", "{1B1A1E73-7D6A-4F9B-89BB-FA60C4568948}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
