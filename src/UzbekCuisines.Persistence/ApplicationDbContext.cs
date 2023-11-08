@@ -19,8 +19,8 @@ public class ApplicationDbContext : DbContext, IApplicationDbContext
         modelBuilder.ApplyConfigurationsFromAssembly(typeof(ApplicationDbContext).Assembly);
     }
 
-    public DbSet<Customer> Customers {  get; set; }
+    public DbSet<Customer> Customers { get; set; }
 
-    public DbSet<Order> Orders {  get; set; }
+    public DbSet<Order> Orders { get; set; }
 
 }

@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace UzbekCuisines.Domain.Entities.Customers;
+﻿namespace UzbekCuisines.Domain.Entities.Customers;
 
 public class Customer
 {

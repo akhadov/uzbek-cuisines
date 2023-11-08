@@ -1,9 +1,4 @@
 ﻿using MediatR;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using UzbekCuisines.Application.Data;
 using UzbekCuisines.Domain.Entities.Customers;
 using UzbekCuisines.Domain.Entities.Orders;
