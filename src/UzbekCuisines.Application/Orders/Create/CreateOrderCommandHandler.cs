@@ -8,6 +8,8 @@ namespace UzbekCuisines.Application.Orders.Create;
 internal sealed class CreateOrderCommandHandler : IRequestHandler<CreateOrderCommand>
 {
     private readonly IApplicationDbContext _context;
+    // from mediatr for sending notification
+    private readonly IPublisher _publisher;
 
     public CreateOrderCommandHandler(IApplicationDbContext context)
     {
@@ -30,6 +32,8 @@ internal sealed class CreateOrderCommandHandler : IRequestHandler<CreateOrderCom
         _context.Orders.Add(order);
 
         await _context.SaveChangesAsync(cancellationToken);
+
+        await _publisher.Publish(new OrderCreatedEvent(order.Id), cancellationToken);
     }
 }
 

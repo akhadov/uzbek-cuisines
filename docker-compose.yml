@@ -1,0 +1,20 @@
+version: '3.4'
+
+services:
+  uzbekcuisines.web.api:
+    image: ${DOCKER_REGISTRY-}uzbekcuisineswebapi
+    build:
+      context: .
+      dockerfile: src/UzbekCuisines.Web.Api/Dockerfile
+
+  uzbekcuisines.db:
+    image: postgres:latest
+    container_name: Database
+    environment:
+      - POSTGRES_DB=uzbekcuisines-db
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=postgres
+    volumes:
+      - D:\Projects\Mine\uzbek-cuisines\src:/var/lib/postgresql/data
+    ports:
+      - 5432:5432 

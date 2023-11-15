@@ -1,4 +1,3 @@
-
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.0.31903.59
@@ -10,6 +9,10 @@ EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "UzbekCuisines.Persistence", "src\UzbekCuisines.Persistence\UzbekCuisines.Persistence.csproj", "{E4B2AE90-F6E2-43DA-8C04-F22E51D8EE16}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "UzbekCuisines.Application", "src\UzbekCuisines.Application\UzbekCuisines.Application.csproj", "{1B1A1E73-7D6A-4F9B-89BB-FA60C4568948}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "UzbekCuisines.Web.Api", "src\UzbekCuisines.Web.Api\UzbekCuisines.Web.Api.csproj", "{04EC26CA-75D3-4F58-BB09-2DBE45BD6C0E}"
+EndProject
+Project("{E53339B2-1760-4266-BCC7-CA923CBCF16C}") = "docker-compose", "docker-compose.dcproj", "{EAE54872-10E2-4BEF-822D-A0BCD0C78B81}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -29,6 +32,14 @@ Global
 		{1B1A1E73-7D6A-4F9B-89BB-FA60C4568948}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{1B1A1E73-7D6A-4F9B-89BB-FA60C4568948}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{1B1A1E73-7D6A-4F9B-89BB-FA60C4568948}.Release|Any CPU.Build.0 = Release|Any CPU
+		{04EC26CA-75D3-4F58-BB09-2DBE45BD6C0E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{04EC26CA-75D3-4F58-BB09-2DBE45BD6C0E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{04EC26CA-75D3-4F58-BB09-2DBE45BD6C0E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{04EC26CA-75D3-4F58-BB09-2DBE45BD6C0E}.Release|Any CPU.Build.0 = Release|Any CPU
+		{EAE54872-10E2-4BEF-822D-A0BCD0C78B81}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{EAE54872-10E2-4BEF-822D-A0BCD0C78B81}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{EAE54872-10E2-4BEF-822D-A0BCD0C78B81}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{EAE54872-10E2-4BEF-822D-A0BCD0C78B81}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -37,6 +48,7 @@ Global
 		{2C6F60F2-B6B9-4674-A197-0888844C8C54} = {8CD69A13-0DD8-4F79-8F19-80D7FCC9528E}
 		{E4B2AE90-F6E2-43DA-8C04-F22E51D8EE16} = {8CD69A13-0DD8-4F79-8F19-80D7FCC9528E}
 		{1B1A1E73-7D6A-4F9B-89BB-FA60C4568948} = {8CD69A13-0DD8-4F79-8F19-80D7FCC9528E}
+		{04EC26CA-75D3-4F58-BB09-2DBE45BD6C0E} = {8CD69A13-0DD8-4F79-8F19-80D7FCC9528E}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {735AEFA3-9862-42FE-8FAB-894106060CB9}
