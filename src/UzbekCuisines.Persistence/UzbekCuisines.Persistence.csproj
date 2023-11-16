@@ -8,12 +8,10 @@
     <None Remove="ApplicationDbContext.cs~RF1f00fd2.TMP" />
   </ItemGroup>
   <ItemGroup>
-    <PackageReference Include="Npgsql.EntityFrameworkCore.PostgreSQL" Version="7.0.11" />
-    <PackageReference Include="Microsoft.EntityFrameworkCore" Version="8.0.0-rc.2.23480.1" />
-    <PackageReference Include="Microsoft.EntityFrameworkCore.Tools" Version="8.0.0-rc.2.23480.1" />
-  </ItemGroup>
-  <ItemGroup>
     <ProjectReference Include="..\UzbekCuisines.Application\UzbekCuisines.Application.csproj" />
     <ProjectReference Include="..\UzbekCuisines.Domain\UzbekCuisines.Domain.csproj" />
+  </ItemGroup>
+  <ItemGroup>
+    <PackageReference Include="Npgsql.EntityFrameworkCore.PostgreSQL" Version="8.0.0-rc.2" />
   </ItemGroup>
 </Project>

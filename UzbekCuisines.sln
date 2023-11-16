@@ -10,7 +10,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "UzbekCuisines.Persistence",
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "UzbekCuisines.Application", "src\UzbekCuisines.Application\UzbekCuisines.Application.csproj", "{1B1A1E73-7D6A-4F9B-89BB-FA60C4568948}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "UzbekCuisines.Web.Api", "src\UzbekCuisines.Web.Api\UzbekCuisines.Web.Api.csproj", "{04EC26CA-75D3-4F58-BB09-2DBE45BD6C0E}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "UzbekCuisines.Web.Api", "src\UzbekCuisines.Web.Api\UzbekCuisines.Web.Api.csproj", "{04EC26CA-75D3-4F58-BB09-2DBE45BD6C0E}"
 EndProject
 Project("{E53339B2-1760-4266-BCC7-CA923CBCF16C}") = "docker-compose", "docker-compose.dcproj", "{EAE54872-10E2-4BEF-822D-A0BCD0C78B81}"
 EndProject

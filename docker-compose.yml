@@ -15,6 +15,19 @@ services:
       - POSTGRES_USER=postgres
       - POSTGRES_PASSWORD=postgres
     volumes:
-      - D:\Projects\Mine\uzbek-cuisines\src:/var/lib/postgresql/data
+      - D:/Projects/Mine/uzbek-cuisines/src:/var/lib/postgresql/data
     ports:
       - 5432:5432 
+  uzbekcuisines.mq:
+    image: rabbitmq:3-management
+    container_name: uzbekcuisines-mq
+    hostname: uzbekcuisines-mq
+    volumes:
+        - D:/Projects/Mine/uzbek-cuisines/queue/data/:/var/lib/rabbitmq
+        - D:/Projects/Mine/uzbek-cuisines/queue/log/:/var/lab/rabbitmq
+    ports:
+        - 5672:5672
+        - 15672:15672 
+    environment:
+        RABBITMQ_DEFAULT_USER: guest
+        RABBITMQ_DEFAULT_PASS: guest
