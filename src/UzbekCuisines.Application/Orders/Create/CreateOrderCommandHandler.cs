@@ -10,16 +10,22 @@ internal sealed class CreateOrderCommandHandler : IRequestHandler<CreateOrderCom
     private readonly IApplicationDbContext _context;
     // from mediatr for sending notification
     private readonly IPublisher _publisher;
+    private readonly IRepository<Customer> _customersRepository;
+    private readonly IRepository<Order> _ordersRepository;
 
-    public CreateOrderCommandHandler(IApplicationDbContext context)
+    public CreateOrderCommandHandler(
+        IApplicationDbContext context, 
+        IRepository<Customer> customersRepository, 
+        IRepository<Order> ordersRepository)
     {
         _context = context;
+        _customersRepository = customersRepository;
+        _ordersRepository = ordersRepository;
     }
 
     public async Task Handle(CreateOrderCommand request, CancellationToken cancellationToken)
     {
-        var customer = await _context.Customers.FindAsync(
-            new CustomerId(request.CustomerId));
+        var customer = await _customersRepository.GetByIdAsync(request.CustomerId);
 
         if (customer is null)
         {
@@ -29,9 +35,9 @@ internal sealed class CreateOrderCommandHandler : IRequestHandler<CreateOrderCom
 
         var order = Order.Create(customer.Id);
 
-        _context.Orders.Add(order);
+        _ordersRepository.Insert(order);
 
-        await _context.SaveChangesAsync(cancellationToken);
+        await _ordersRepository.SaveChangesAsync();
 
         await _publisher.Publish(new OrderCreatedEvent(order.Id), cancellationToken);
     }

@@ -12,10 +12,14 @@ public static class DependencyInjection
         IConfiguration configuration)
     {
         services.AddDbContext<ApplicationDbContext>(options =>
-        options.UseNpgsql(configuration.GetConnectionString("Database")));
+            options
+                .UseNpgsql(configuration.GetConnectionString("Database"))
+                .UseSnakeCaseNamingConvention());
 
         services.AddScoped<IApplicationDbContext>(sp =>
             sp.GetRequiredService<ApplicationDbContext>());
+
+        services.AddScoped(typeof(IRepository<>), typeof(Repository<>));
 
         return services;
     }
