@@ -4,6 +4,9 @@ using UzbekCuisines.Application;
 using Rebus.Config;
 using Rebus.Routing.TypeBased;
 using UzbekCuisines.Application.Orders.Create;
+using Carter;
+using Microsoft.AspNetCore.RateLimiting;
+using System.Threading.RateLimiting;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -14,7 +17,40 @@ builder.Services.AddSwaggerGen();
 
 builder.Services.AddPersistence(builder.Configuration);
 builder.Services.AddApplication();
-//builder.Services.AddCarter();
+builder.Services.AddCarter();
+
+builder.Services.AddRateLimiter(rateLimiterOptions =>
+{
+    rateLimiterOptions.RejectionStatusCode = StatusCodes.Status429TooManyRequests;
+
+    rateLimiterOptions.AddFixedWindowLimiter("fixed", options =>
+    {
+        options.Window = TimeSpan.FromSeconds(10);
+        options.PermitLimit = 3;
+        options.QueueLimit = 3;
+        options.QueueProcessingOrder = QueueProcessingOrder.OldestFirst;
+    });
+
+    rateLimiterOptions.AddSlidingWindowLimiter("sliding", options =>
+    {
+        options.Window = TimeSpan.FromSeconds(15);
+        options.SegmentsPerWindow = 3;
+        options.PermitLimit = 15;
+    });
+
+    rateLimiterOptions.AddTokenBucketLimiter("token", options =>
+    {
+        options.TokenLimit = 100;
+        options.ReplenishmentPeriod = TimeSpan.FromSeconds(5);
+        options.TokensPerPeriod = 10;
+    });
+
+    rateLimiterOptions.AddConcurrencyLimiter("concurrency", options =>
+    {
+        options.PermitLimit = 5;
+
+    });
+});
 
 builder.Host.UseSerilog((context, configuration) =>
     configuration.ReadFrom.Configuration(context.Configuration));
@@ -53,9 +89,11 @@ if (app.Environment.IsDevelopment())
 
 app.UseHttpsRedirection();
 
+app.UseRateLimiter();
+
 app.UseAuthorization();
 
-//app.MapCarter();
+app.MapCarter();
 
 app.MapControllers();
 
