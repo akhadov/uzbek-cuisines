@@ -1,1 +1,0 @@
-﻿global using UzbekCuisines.Domain.Common;
