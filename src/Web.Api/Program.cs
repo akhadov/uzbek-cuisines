@@ -60,7 +60,7 @@ app.UseAuthorization();
 // REMARK: If you want to use Controllers, you'll need this.
 app.MapControllers();
 
-app.Run();
+await app.RunAsync();
 
 // REMARK: Required for functional and integration tests to work.
 public partial class Program;
