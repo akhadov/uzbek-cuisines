@@ -28,7 +28,7 @@ public static class DependencyInjection
             options.GroupNameFormat = "'v'V";
             options.SubstituteApiVersionInUrl = true;
         });
-        
+
         services.ConfigureOptions<ConfigureSwaggerGenOptions>();
 
         return services;
