@@ -1,6 +1,7 @@
 ﻿using Application.Abstractions.Caching;
 using Application.Abstractions.Data;
 using Dapper;
+using Domain.Categories;
 using Domain.Users;
 using Infrastructure.Caching;
 using Infrastructure.Data;
@@ -53,6 +54,7 @@ public static class DependencyInjection
         services.AddScoped<IUnitOfWork>(sp => sp.GetRequiredService<ApplicationDbContext>());
 
         services.AddScoped<IUserRepository, UserRepository>();
+        services.AddScoped<ICategoryRepository, CategoryRepository>();
 
         return services;
     }

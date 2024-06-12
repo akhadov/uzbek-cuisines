@@ -30,4 +30,9 @@
     </PackageReference>
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="Categories\Delete\" />
+    <Folder Include="Categories\Update\" />
+  </ItemGroup>
+
 </Project>

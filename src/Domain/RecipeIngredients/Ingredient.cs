@@ -4,16 +4,16 @@ using SharedKernel;
 namespace Domain.RecipeIngredients;
 public sealed class Ingredient : Entity
 {
-    private Ingredient(Guid id, Name name)
+    private Ingredient(Guid id, IngredientsName name)
         : base(id)
     {
         Name = name;
     }
     private Ingredient() { }
 
-    public Name Name { get; private set; }
+    public IngredientsName Name { get; private set; }
 
-    public static Ingredient Create(Name name)
+    public static Ingredient Create(IngredientsName name)
     {
         var ingredient = new Ingredient(Guid.NewGuid(), name);
 

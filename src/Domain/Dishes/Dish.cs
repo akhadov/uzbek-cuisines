@@ -4,7 +4,7 @@ using SharedKernel;
 namespace Domain.Dishes;
 public sealed class Dish : Entity
 {
-    private Dish(Guid id, Name name)
+    private Dish(Guid id, string name)
         : base(id)
     {
         Name = name;
@@ -12,9 +12,9 @@ public sealed class Dish : Entity
 
     private Dish() { }
 
-    public Name Name { get; private set; }
+    public string Name { get; private set; }
 
-    public static Dish Create(Name name)
+    public static Dish Create(string name)
     {
         var category = new Dish(Guid.NewGuid(), name);
 

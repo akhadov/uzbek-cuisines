@@ -21,15 +21,16 @@ public sealed class RecipeIngredient : Entity
 
     public Unit Unit { get; private set; }
 
-    public static Ingredient Create(Ingredient ingredient, decimal amount, Unit unit)
+    public static RecipeIngredient Create(Guid recipeId, Guid ingredientId, decimal amount, Unit unit)
     {
         var recipeIngredient = new RecipeIngredient(
             Guid.NewGuid(),
-            ingredient.Id,
+            recipeId,
+            ingredientId,
             amount,
             unit);
 
-        recipeIngredient.Raise(new RecipeIngredientCreatedDomainEvent(ingredient.Id));
+        recipeIngredient.Raise(new RecipeIngredientCreatedDomainEvent(recipeIngredient.Id));
 
         return recipeIngredient;
     }
