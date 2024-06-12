@@ -1,5 +1,4 @@
 ﻿using Domain.RecipeIngredients.Events;
-using Domain.Recipes;
 using SharedKernel;
 
 namespace Domain.RecipeIngredients;
@@ -22,7 +21,7 @@ public sealed class RecipeIngredient : Entity
 
     public Unit Unit { get; private set; }
 
-    public static Ingredient Create( Ingredient ingredient, decimal amount, Unit unit)
+    public static Ingredient Create(Ingredient ingredient, decimal amount, Unit unit)
     {
         var recipeIngredient = new RecipeIngredient(
             Guid.NewGuid(),

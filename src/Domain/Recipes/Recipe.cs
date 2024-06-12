@@ -1,19 +1,17 @@
-﻿using Domain.Categories;
-using Domain.Dishes;
-using Domain.Users;
+﻿using Domain.Recipes.Events;
 using SharedKernel;
 
 namespace Domain.Recipes;
 public sealed class Recipe : Entity
 {
     private Recipe(
-        Guid id, 
-        Guid userId, 
-        Guid dishId, 
-        Guid categoryId, 
+        Guid id,
+        Guid userId,
+        Guid dishId,
+        Guid categoryId,
         Description description,
-        int prepTime,
-        int cookTime,
+        TimeSpan prepTime,
+        TimeSpan cookTime,
         int servings,
         string imagePath)
         : base(id)
@@ -38,25 +36,37 @@ public sealed class Recipe : Entity
 
     public Description Description { get; private set; }
 
-    public int PrepTime { get; private set; }
+    public TimeSpan PrepTime { get; private set; }
 
-    public int CookTime { get; private set; }
+    public TimeSpan CookTime { get; private set; }
 
     public int Servings { get; private set; }
 
     public string ImagePath { get; private set; }
 
     public static Recipe Create(
-        User user, 
-        Dish dish,
-        Category category, 
-        Description description, 
-        int prepTime, 
-        int cookTime,
-        int servings)
+        Guid userId,
+        Guid dishId,
+        Guid categoryId,
+        Description description,
+        TimeSpan prepTime,
+        TimeSpan cookTime,
+        int servings,
+        string imagePath)
     {
         var recipe = new Recipe(
             Guid.NewGuid(),
-            );
+            userId,
+            dishId,
+            categoryId,
+            description,
+            prepTime,
+            cookTime,
+            servings,
+            imagePath);
+
+        recipe.Raise(new RecipeCreatedDomainEvent(recipe.Id));
+
+        return recipe;
     }
 }
