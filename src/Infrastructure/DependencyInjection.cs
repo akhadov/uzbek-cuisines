@@ -2,6 +2,11 @@
 using Application.Abstractions.Data;
 using Dapper;
 using Domain.Categories;
+using Domain.Dishes;
+using Domain.Instructions;
+using Domain.RecipeIngredients;
+using Domain.Recipes;
+using Domain.Reviews;
 using Domain.Users;
 using Infrastructure.Caching;
 using Infrastructure.Data;
@@ -55,6 +60,12 @@ public static class DependencyInjection
 
         services.AddScoped<IUserRepository, UserRepository>();
         services.AddScoped<ICategoryRepository, CategoryRepository>();
+        services.AddScoped<IDishRepository, DishRepository>();
+        services.AddScoped<IIngredientRepository, IngredientRepository>();
+        services.AddScoped<IRecipeIngredientRepository, RecipeIngredientRepository>();
+        services.AddScoped<IRecipeRepository, RecipeRepository>();
+        services.AddScoped<IReviewRepository, ReviewRepository>();
+        services.AddScoped<IInstructionRepository, InstructionRepository>();
 
         return services;
     }
