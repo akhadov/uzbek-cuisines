@@ -4,10 +4,10 @@ using SharedKernel;
 namespace Domain.RecipeIngredients;
 public sealed class RecipeIngredient : Entity
 {
-    private RecipeIngredient(Guid id, Guid recipeId, Guid ingredientId, decimal amount, Unit unit) : base(id)
+    private RecipeIngredient(Guid id, Guid recipeId, List<Ingredient> ingredients, decimal amount, Unit unit) : base(id)
     {
         RecipeId = recipeId;
-        IngredientId = ingredientId;
+        Ingredients = ingredients;
         Amount = amount;
         Unit = unit;
     }
@@ -15,18 +15,18 @@ public sealed class RecipeIngredient : Entity
 
     public Guid RecipeId { get; private set; }
 
-    public Guid IngredientId { get; private set; }
+    public List<Ingredient> Ingredients { get; private set; } = new();
 
     public decimal Amount { get; private set; }
 
     public Unit Unit { get; private set; }
 
-    public static RecipeIngredient Create(Guid recipeId, Guid ingredientId, decimal amount, Unit unit)
+    public static RecipeIngredient Create(Guid recipeId, List<Ingredient> ingredients, decimal amount, Unit unit)
     {
         var recipeIngredient = new RecipeIngredient(
             Guid.NewGuid(),
             recipeId,
-            ingredientId,
+            ingredients,
             amount,
             unit);
 

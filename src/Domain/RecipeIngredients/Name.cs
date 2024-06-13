@@ -1,9 +1,9 @@
 ﻿using SharedKernel;
 
 namespace Domain.RecipeIngredients;
-public sealed record IngredientsName
+public sealed record Name
 {
-    public IngredientsName(string? value)
+    public Name(string? value)
     {
         Ensure.NotNullOrEmpty(value);
 

@@ -9,6 +9,7 @@ public sealed class Recipe : Entity
         Guid userId,
         Guid dishId,
         Guid categoryId,
+        Guid recipeIngredientId,
         Description description,
         TimeSpan prepTime,
         TimeSpan cookTime,
@@ -19,6 +20,7 @@ public sealed class Recipe : Entity
         UserId = userId;
         DishId = dishId;
         CategoryId = categoryId;
+        RecipeIngredientId = recipeIngredientId;
         Description = description;
         PrepTime = prepTime;
         CookTime = cookTime;
@@ -34,6 +36,8 @@ public sealed class Recipe : Entity
 
     public Guid CategoryId { get; private set; }
 
+    public Guid RecipeIngredientId { get; private set; }
+
     public Description Description { get; private set; }
 
     public TimeSpan PrepTime { get; private set; }
@@ -48,6 +52,7 @@ public sealed class Recipe : Entity
         Guid userId,
         Guid dishId,
         Guid categoryId,
+        Guid recipeIngredientId,
         Description description,
         TimeSpan prepTime,
         TimeSpan cookTime,
@@ -59,6 +64,7 @@ public sealed class Recipe : Entity
             userId,
             dishId,
             categoryId,
+            recipeIngredientId,
             description,
             prepTime,
             cookTime,
