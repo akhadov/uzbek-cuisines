@@ -1,7 +1,5 @@
-﻿using Application.Abstractions.Messaging;
-
-namespace Application.Recipes.Create;
-public sealed record CreateRecipeCommand(
+﻿namespace Application.Recipes.Create;
+public sealed record CreateRecipeRequest(
     Guid UserId,
     Guid DishId,
     Guid CategoryId,
@@ -10,4 +8,4 @@ public sealed record CreateRecipeCommand(
     TimeSpan PrepTime,
     TimeSpan CookTime,
     int Servings,
-    string ImagePath) : ICommand<Guid>;
+    string ImagePath);

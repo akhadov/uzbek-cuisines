@@ -10,8 +10,8 @@ internal sealed class IngredientRepository(ApplicationDbContext context) : IIngr
         return context.Ingredients.FirstOrDefaultAsync(i => i.Id == id, cancellationToken);
     }
 
-    public void Insert(Ingredient ingredient)
+    public void InsertRange(IEnumerable<Ingredient> ingredients)
     {
-        context.Ingredients.Add(ingredient);
+        context.Ingredients.AddRange(ingredients);
     }
 }

@@ -3,5 +3,5 @@ public interface IIngredientRepository
 {
     Task<Ingredient?> GetByIdAsync(Guid id, CancellationToken cancellationToken = default);
 
-    void Insert(Ingredient ingredient);
+    void InsertRange(IEnumerable<Ingredient> ingredients);
 }
