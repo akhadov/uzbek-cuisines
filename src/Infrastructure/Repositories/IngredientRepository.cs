@@ -1,4 +1,4 @@
-﻿using Domain.RecipeIngredients;
+﻿using Domain.Ingredients;
 using Infrastructure.Database;
 using Microsoft.EntityFrameworkCore;
 

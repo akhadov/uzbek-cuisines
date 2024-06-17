@@ -1,6 +1,6 @@
 ﻿using SharedKernel;
 
-namespace Domain.RecipeIngredients;
+namespace Domain.Ingredients;
 public sealed record Unit
 {
     public Unit(string? value)

@@ -5,9 +5,8 @@ public sealed record CreateRecipeCommand(
     Guid UserId,
     Guid DishId,
     Guid CategoryId,
-    Guid RecipeIngredientId,
     string Description,
-    TimeSpan PrepTime,
-    TimeSpan CookTime,
+    int PrepTime,
+    int CookTime,
     int Servings,
     string ImagePath) : ICommand<Guid>;

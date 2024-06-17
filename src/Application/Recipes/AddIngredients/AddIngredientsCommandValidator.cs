@@ -1,11 +1,11 @@
 ﻿using FluentValidation;
 
-namespace Application.RecipeIngredients.CreateIngredient;
+namespace Application.Recipes.AddIngredients;
 internal sealed class AddIngredientsCommandValidator : AbstractValidator<AddIngredientsCommand>
 {
     public AddIngredientsCommandValidator()
     {
         RuleFor(i => i.Ingredients)
-            .NotEmpty();
+            .NotEmpty().WithErrorCode(RecipeErrorCodes.AddIngredients.MissingIngredients);
     }
 }

@@ -13,8 +13,8 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace Infrastructure.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20240614203859_ThirdCreate")]
-    partial class ThirdCreate
+    [Migration("20240617200819_InitialCreate")]
+    partial class InitialCreate
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -68,6 +68,50 @@ namespace Infrastructure.Migrations
                     b.ToTable("dishes", "public");
                 });
 
+            modelBuilder.Entity("Domain.Ingredients.Ingredient", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uuid")
+                        .HasColumnName("id");
+
+                    b.Property<decimal>("Amount")
+                        .HasColumnType("numeric")
+                        .HasColumnName("amount");
+
+                    b.Property<Guid>("RecipeId")
+                        .HasColumnType("uuid")
+                        .HasColumnName("recipe_id");
+
+                    b.ComplexProperty<Dictionary<string, object>>("Name", "Domain.Ingredients.Ingredient.Name#Name", b1 =>
+                        {
+                            b1.IsRequired();
+
+                            b1.Property<string>("Value")
+                                .IsRequired()
+                                .HasColumnType("text")
+                                .HasColumnName("name");
+                        });
+
+                    b.ComplexProperty<Dictionary<string, object>>("Unit", "Domain.Ingredients.Ingredient.Unit#Unit", b1 =>
+                        {
+                            b1.IsRequired();
+
+                            b1.Property<string>("Value")
+                                .IsRequired()
+                                .HasColumnType("text")
+                                .HasColumnName("unit");
+                        });
+
+                    b.HasKey("Id")
+                        .HasName("pk_ingredients");
+
+                    b.HasIndex("RecipeId")
+                        .HasDatabaseName("ix_ingredients_recipe_id");
+
+                    b.ToTable("ingredients", "public");
+                });
+
             modelBuilder.Entity("Domain.Instructions.Instruction", b =>
                 {
                     b.Property<Guid>("Id")
@@ -102,70 +146,6 @@ namespace Infrastructure.Migrations
                     b.ToTable("instructions", "public");
                 });
 
-            modelBuilder.Entity("Domain.RecipeIngredients.Ingredient", b =>
-                {
-                    b.Property<Guid>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("uuid")
-                        .HasColumnName("id");
-
-                    b.Property<Guid>("RecipeIngredientId")
-                        .HasColumnType("uuid")
-                        .HasColumnName("recipe_ingredient_id");
-
-                    b.ComplexProperty<Dictionary<string, object>>("Name", "Domain.RecipeIngredients.Ingredient.Name#Name", b1 =>
-                        {
-                            b1.IsRequired();
-
-                            b1.Property<string>("Value")
-                                .IsRequired()
-                                .HasColumnType("text")
-                                .HasColumnName("name");
-                        });
-
-                    b.HasKey("Id")
-                        .HasName("pk_ingredients");
-
-                    b.HasIndex("RecipeIngredientId")
-                        .HasDatabaseName("ix_ingredients_recipe_ingredient_id");
-
-                    b.ToTable("ingredients", "public");
-                });
-
-            modelBuilder.Entity("Domain.RecipeIngredients.RecipeIngredient", b =>
-                {
-                    b.Property<Guid>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("uuid")
-                        .HasColumnName("id");
-
-                    b.Property<decimal>("Amount")
-                        .HasColumnType("numeric")
-                        .HasColumnName("amount");
-
-                    b.Property<Guid>("RecipeId")
-                        .HasColumnType("uuid")
-                        .HasColumnName("recipe_id");
-
-                    b.ComplexProperty<Dictionary<string, object>>("Unit", "Domain.RecipeIngredients.RecipeIngredient.Unit#Unit", b1 =>
-                        {
-                            b1.IsRequired();
-
-                            b1.Property<string>("Value")
-                                .IsRequired()
-                                .HasColumnType("text")
-                                .HasColumnName("unit");
-                        });
-
-                    b.HasKey("Id")
-                        .HasName("pk_recipe_ingredients");
-
-                    b.HasIndex("RecipeId")
-                        .HasDatabaseName("ix_recipe_ingredients_recipe_id");
-
-                    b.ToTable("recipe_ingredients", "public");
-                });
-
             modelBuilder.Entity("Domain.Recipes.Recipe", b =>
                 {
                     b.Property<Guid>("Id")
@@ -177,8 +157,8 @@ namespace Infrastructure.Migrations
                         .HasColumnType("uuid")
                         .HasColumnName("category_id");
 
-                    b.Property<TimeSpan>("CookTime")
-                        .HasColumnType("interval")
+                    b.Property<int>("CookTime")
+                        .HasColumnType("integer")
                         .HasColumnName("cook_time");
 
                     b.Property<Guid>("DishId")
@@ -190,13 +170,9 @@ namespace Infrastructure.Migrations
                         .HasColumnType("text")
                         .HasColumnName("image_path");
 
-                    b.Property<TimeSpan>("PrepTime")
-                        .HasColumnType("interval")
+                    b.Property<int>("PrepTime")
+                        .HasColumnType("integer")
                         .HasColumnName("prep_time");
-
-                    b.Property<Guid>("RecipeIngredientId")
-                        .HasColumnType("uuid")
-                        .HasColumnName("recipe_ingredient_id");
 
                     b.Property<int>("Servings")
                         .HasColumnType("integer")
@@ -309,6 +285,16 @@ namespace Infrastructure.Migrations
                     b.ToTable("users", "public");
                 });
 
+            modelBuilder.Entity("Domain.Ingredients.Ingredient", b =>
+                {
+                    b.HasOne("Domain.Recipes.Recipe", null)
+                        .WithMany("Ingredients")
+                        .HasForeignKey("RecipeId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired()
+                        .HasConstraintName("fk_ingredients_recipes_recipe_id");
+                });
+
             modelBuilder.Entity("Domain.Instructions.Instruction", b =>
                 {
                     b.HasOne("Domain.Recipes.Recipe", null)
@@ -317,26 +303,6 @@ namespace Infrastructure.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired()
                         .HasConstraintName("fk_instructions_recipes_recipe_id");
-                });
-
-            modelBuilder.Entity("Domain.RecipeIngredients.Ingredient", b =>
-                {
-                    b.HasOne("Domain.RecipeIngredients.RecipeIngredient", null)
-                        .WithMany("Ingredients")
-                        .HasForeignKey("RecipeIngredientId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired()
-                        .HasConstraintName("fk_ingredients_recipe_ingredients_recipe_ingredient_id");
-                });
-
-            modelBuilder.Entity("Domain.RecipeIngredients.RecipeIngredient", b =>
-                {
-                    b.HasOne("Domain.Recipes.Recipe", null)
-                        .WithMany()
-                        .HasForeignKey("RecipeId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired()
-                        .HasConstraintName("fk_recipe_ingredients_recipes_recipe_id");
                 });
 
             modelBuilder.Entity("Domain.Recipes.Recipe", b =>
@@ -380,7 +346,7 @@ namespace Infrastructure.Migrations
                         .HasConstraintName("fk_reviews_users_user_id");
                 });
 
-            modelBuilder.Entity("Domain.RecipeIngredients.RecipeIngredient", b =>
+            modelBuilder.Entity("Domain.Recipes.Recipe", b =>
                 {
                     b.Navigation("Ingredients");
                 });

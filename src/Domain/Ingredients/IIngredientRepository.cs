@@ -1,4 +1,4 @@
-﻿namespace Domain.RecipeIngredients;
+﻿namespace Domain.Ingredients;
 public interface IIngredientRepository
 {
     Task<Ingredient?> GetByIdAsync(Guid id, CancellationToken cancellationToken = default);

@@ -2,7 +2,6 @@
 using Application.Abstractions.Messaging;
 using Domain.Categories;
 using Domain.Dishes;
-using Domain.RecipeIngredients;
 using Domain.Recipes;
 using Domain.Users;
 using SharedKernel;
@@ -12,7 +11,6 @@ internal sealed class CreateRecipeCommandHandler(
     IUserRepository userRepository,
     IDishRepository dishRepository,
     ICategoryRepository categoryRepository,
-    IRecipeIngredientRepository recipeIngredientRepository,
     IRecipeRepository recipeRepository,
     IUnitOfWork unitOfWork) : ICommandHandler<CreateRecipeCommand, Guid>
 {
@@ -36,18 +34,12 @@ internal sealed class CreateRecipeCommandHandler(
             return Result.Failure<Guid>(CategoryErrors.NotFound(request.CategoryId));
         }
 
-        RecipeIngredient? recipeIngredient = await recipeIngredientRepository.GetByIdAsync(request.RecipeIngredientId, cancellationToken);
-        if (recipeIngredient is null)
-        {
-            return Result.Failure<Guid>(RecipeIngredientErrors.NotFound(request.RecipeIngredientId));
-        }
-
         var description = new Description(request.Description);
+
         var recipe = Recipe.Create(
             request.UserId,
             request.DishId,
             request.CategoryId,
-            request.RecipeIngredientId,
             description,
             request.PrepTime,
             request.CookTime,
@@ -55,6 +47,7 @@ internal sealed class CreateRecipeCommandHandler(
             request.ImagePath);
 
         recipeRepository.Insert(recipe);
+
         await unitOfWork.SaveChangesAsync(cancellationToken);
 
         return Result.Success(recipe.Id);

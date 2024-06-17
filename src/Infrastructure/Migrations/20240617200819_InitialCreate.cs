@@ -1,15 +1,29 @@
-﻿using Microsoft.EntityFrameworkCore.Migrations;
+﻿using System;
+using Microsoft.EntityFrameworkCore.Migrations;
 
 #nullable disable
 
 namespace Infrastructure.Migrations;
 
 /// <inheritdoc />
-public partial class SecondCreate : Migration
+public partial class InitialCreate : Migration
 {
     /// <inheritdoc />
     protected override void Up(MigrationBuilder migrationBuilder)
     {
+        migrationBuilder.EnsureSchema(
+            name: "public");
+
+        migrationBuilder.CreateTable(
+            name: "categories",
+            schema: "public",
+            columns: table => new
+            {
+                id = table.Column<Guid>(type: "uuid", nullable: false),
+                name = table.Column<string>(type: "text", nullable: false)
+            },
+            constraints: table => table.PrimaryKey("pk_categories", x => x.id));
+
         migrationBuilder.CreateTable(
             name: "dishes",
             schema: "public",
@@ -21,6 +35,18 @@ public partial class SecondCreate : Migration
             constraints: table => table.PrimaryKey("pk_dishes", x => x.id));
 
         migrationBuilder.CreateTable(
+            name: "users",
+            schema: "public",
+            columns: table => new
+            {
+                id = table.Column<Guid>(type: "uuid", nullable: false),
+                has_public_profile = table.Column<bool>(type: "boolean", nullable: false),
+                email = table.Column<string>(type: "text", nullable: false),
+                name = table.Column<string>(type: "text", nullable: false)
+            },
+            constraints: table => table.PrimaryKey("pk_users", x => x.id));
+
+        migrationBuilder.CreateTable(
             name: "recipes",
             schema: "public",
             columns: table => new
@@ -29,9 +55,8 @@ public partial class SecondCreate : Migration
                 user_id = table.Column<Guid>(type: "uuid", nullable: false),
                 dish_id = table.Column<Guid>(type: "uuid", nullable: false),
                 category_id = table.Column<Guid>(type: "uuid", nullable: false),
-                recipe_ingredient_id = table.Column<Guid>(type: "uuid", nullable: false),
-                prep_time = table.Column<TimeSpan>(type: "interval", nullable: false),
-                cook_time = table.Column<TimeSpan>(type: "interval", nullable: false),
+                prep_time = table.Column<int>(type: "integer", nullable: false),
+                cook_time = table.Column<int>(type: "integer", nullable: false),
                 servings = table.Column<int>(type: "integer", nullable: false),
                 image_path = table.Column<string>(type: "text", nullable: false),
                 description = table.Column<string>(type: "text", nullable: false)
@@ -63,6 +88,29 @@ public partial class SecondCreate : Migration
             });
 
         migrationBuilder.CreateTable(
+            name: "ingredients",
+            schema: "public",
+            columns: table => new
+            {
+                id = table.Column<Guid>(type: "uuid", nullable: false),
+                recipe_id = table.Column<Guid>(type: "uuid", nullable: false),
+                amount = table.Column<decimal>(type: "numeric", nullable: false),
+                name = table.Column<string>(type: "text", nullable: false),
+                unit = table.Column<string>(type: "text", nullable: false)
+            },
+            constraints: table =>
+            {
+                table.PrimaryKey("pk_ingredients", x => x.id);
+                table.ForeignKey(
+                    name: "fk_ingredients_recipes_recipe_id",
+                    column: x => x.recipe_id,
+                    principalSchema: "public",
+                    principalTable: "recipes",
+                    principalColumn: "id",
+                    onDelete: ReferentialAction.Cascade);
+            });
+
+        migrationBuilder.CreateTable(
             name: "instructions",
             schema: "public",
             columns: table => new
@@ -77,28 +125,6 @@ public partial class SecondCreate : Migration
                 table.PrimaryKey("pk_instructions", x => x.id);
                 table.ForeignKey(
                     name: "fk_instructions_recipes_recipe_id",
-                    column: x => x.recipe_id,
-                    principalSchema: "public",
-                    principalTable: "recipes",
-                    principalColumn: "id",
-                    onDelete: ReferentialAction.Cascade);
-            });
-
-        migrationBuilder.CreateTable(
-            name: "recipe_ingredients",
-            schema: "public",
-            columns: table => new
-            {
-                id = table.Column<Guid>(type: "uuid", nullable: false),
-                recipe_id = table.Column<Guid>(type: "uuid", nullable: false),
-                amount = table.Column<decimal>(type: "numeric", nullable: false),
-                unit = table.Column<string>(type: "text", nullable: false)
-            },
-            constraints: table =>
-            {
-                table.PrimaryKey("pk_recipe_ingredients", x => x.id);
-                table.ForeignKey(
-                    name: "fk_recipe_ingredients_recipes_recipe_id",
                     column: x => x.recipe_id,
                     principalSchema: "public",
                     principalTable: "recipes",
@@ -137,43 +163,16 @@ public partial class SecondCreate : Migration
                     onDelete: ReferentialAction.Cascade);
             });
 
-        migrationBuilder.CreateTable(
-            name: "ingredients",
-            schema: "public",
-            columns: table => new
-            {
-                id = table.Column<Guid>(type: "uuid", nullable: false),
-                recipe_ingredient_id = table.Column<Guid>(type: "uuid", nullable: false),
-                name = table.Column<string>(type: "text", nullable: false)
-            },
-            constraints: table =>
-            {
-                table.PrimaryKey("pk_ingredients", x => x.id);
-                table.ForeignKey(
-                    name: "fk_ingredients_recipe_ingredients_recipe_ingredient_id",
-                    column: x => x.recipe_ingredient_id,
-                    principalSchema: "public",
-                    principalTable: "recipe_ingredients",
-                    principalColumn: "id",
-                    onDelete: ReferentialAction.Cascade);
-            });
-
         migrationBuilder.CreateIndex(
-            name: "ix_ingredients_recipe_ingredient_id",
+            name: "ix_ingredients_recipe_id",
             schema: "public",
             table: "ingredients",
-            column: "recipe_ingredient_id");
+            column: "recipe_id");
 
         migrationBuilder.CreateIndex(
             name: "ix_instructions_recipe_id",
             schema: "public",
             table: "instructions",
-            column: "recipe_id");
-
-        migrationBuilder.CreateIndex(
-            name: "ix_recipe_ingredients_recipe_id",
-            schema: "public",
-            table: "recipe_ingredients",
             column: "recipe_id");
 
         migrationBuilder.CreateIndex(
@@ -223,15 +222,19 @@ public partial class SecondCreate : Migration
             schema: "public");
 
         migrationBuilder.DropTable(
-            name: "recipe_ingredients",
-            schema: "public");
-
-        migrationBuilder.DropTable(
             name: "recipes",
             schema: "public");
 
         migrationBuilder.DropTable(
+            name: "categories",
+            schema: "public");
+
+        migrationBuilder.DropTable(
             name: "dishes",
+            schema: "public");
+
+        migrationBuilder.DropTable(
+            name: "users",
             schema: "public");
     }
 }

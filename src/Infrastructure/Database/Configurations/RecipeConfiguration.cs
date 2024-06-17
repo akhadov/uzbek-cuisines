@@ -1,6 +1,5 @@
 ﻿using Domain.Categories;
 using Domain.Dishes;
-using Domain.RecipeIngredients;
 using Domain.Recipes;
 using Domain.Users;
 using Microsoft.EntityFrameworkCore;
@@ -41,8 +40,8 @@ internal sealed class RecipeConfiguration : IEntityTypeConfiguration<Recipe>
             .WithMany()
             .HasForeignKey(recipe => recipe.CategoryId);
 
-        builder.HasMany<RecipeIngredient>()
-            .WithOne()
-            .HasForeignKey(recipeIngredient => recipeIngredient.RecipeId);
+        builder.HasMany(r => r.Ingredients)
+                .WithOne()
+                .HasForeignKey(ingredient => ingredient.RecipeId);
     }
 }

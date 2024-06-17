@@ -1,4 +1,4 @@
-﻿using Domain.RecipeIngredients;
+﻿using Domain.Ingredients;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
@@ -11,5 +11,11 @@ internal sealed class IngredientConfiguration : IEntityTypeConfiguration<Ingredi
 
         builder.ComplexProperty(ingredient => ingredient.Name,
             x => x.Property(e => e.Value).HasColumnName("name"));
+
+        builder.ComplexProperty(
+            r => r.Unit,
+            b => b.Property(e => e.Value).HasColumnName("unit"));
+
+        builder.Property(r => r.Amount);
     }
 }

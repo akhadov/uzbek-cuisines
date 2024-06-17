@@ -1,27 +1,31 @@
 ﻿using Application.Abstractions.Data;
 using Application.Abstractions.Messaging;
-using Domain.RecipeIngredients;
+using Domain.Ingredients;
+using Domain.Recipes;
 using SharedKernel;
 
-namespace Application.RecipeIngredients.CreateIngredient;
+namespace Application.Recipes.AddIngredients;
 internal sealed class AddIngredientsCommandHandler(
-    IRecipeIngredientRepository recipeIngredientRepository,
     IIngredientRepository ingredientRepository,
+    IRecipeRepository recipeRepository,
     IUnitOfWork unitOfWork) : ICommandHandler<AddIngredientsCommand>
 {
     public async Task<Result> Handle(AddIngredientsCommand request, CancellationToken cancellationToken)
     {
-        RecipeIngredient? recipeIngredient = await recipeIngredientRepository.GetByIdAsync(request.RecipeIngredientId, cancellationToken);
-        if (recipeIngredient is null)
+        Recipe? recipe = await recipeRepository.GetByIdAsync(request.RecipeId, cancellationToken);
+
+        if (recipe is null)
         {
-            return Result.Failure<Guid>(RecipeIngredientErrors.NotFound(request.RecipeIngredientId));
+            return Result.Failure<Guid>(RecipeErrors.NotFound(request.RecipeId));
         }
 
         var results = request
             .Ingredients
             .Select(ingredientRequest =>
-                recipeIngredient.AddIngredient(
-                    ingredientRequest.Name))
+                recipe.AddIngredient(
+                    ingredientRequest.Name,
+                    ingredientRequest.Amount,
+                    new Unit(ingredientRequest.Unit)))
             .ToList();
 
         if (results.Any(r => r.IsFailure))
@@ -29,7 +33,8 @@ internal sealed class AddIngredientsCommandHandler(
             return Result.Failure(ValidationError.FromResults(results));
         }
 
-        ingredientRepository.InsertRange(recipeIngredient.Ingredients);
+        ingredientRepository.InsertRange(recipe.Ingredients);
+
         await unitOfWork.SaveChangesAsync(cancellationToken);
 
         return Result.Success();
