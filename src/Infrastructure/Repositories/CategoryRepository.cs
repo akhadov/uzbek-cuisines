@@ -14,4 +14,14 @@ internal sealed class CategoryRepository(ApplicationDbContext context) : ICatego
     {
         context.Categories.Add(category);
     }
+
+    public void Remove(Category category)
+    {
+        context.Categories.Remove(category);
+    }
+
+    public void Update(Category category)
+    {
+        context.Categories.Update(category);
+    }
 }

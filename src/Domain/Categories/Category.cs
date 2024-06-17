@@ -22,4 +22,9 @@ public sealed class Category : Entity
 
         return category;
     }
+
+    public void Update(Name name)
+    {
+        Name = name;
+    }
 }
