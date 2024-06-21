@@ -26,4 +26,10 @@ public sealed class Instruction : Entity
 
         return instruction;
     }
+
+    public void Update(int stepNumber, Description description)
+    {
+        StepNumber = stepNumber;
+        Description = description;
+    }
 }

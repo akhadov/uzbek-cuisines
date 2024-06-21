@@ -9,10 +9,10 @@ public sealed record Rating
 
     public static Result<Rating> Create(int value)
     {
-        //if (value < 1 || value > 5)
-        //{
-        //    return Result.Failure<Rating>(Invalid);
-        //}
+        if (value < 1 || value > 5)
+        {
+            return Result.Failure<Rating>(ReviewErrors.InvalidRating);
+        }
 
         return new Rating(value);
     }

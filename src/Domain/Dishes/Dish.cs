@@ -22,4 +22,9 @@ public sealed class Dish : Entity
 
         return category;
     }
+
+    public void Update(string name)
+    {
+        Name = name;
+    }
 }

@@ -5,5 +5,7 @@ public interface IRecipeRepository
 
     void Insert(Recipe recipe);
 
+    void Update(Recipe recipe);
+
     void Remove(Recipe recipe);
 }

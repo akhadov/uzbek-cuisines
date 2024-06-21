@@ -14,4 +14,14 @@ internal sealed class DishRepository(ApplicationDbContext context) : IDishReposi
     {
         context.Dishes.Add(dish);
     }
+
+    public void Remove(Dish dish)
+    {
+        context.Dishes.Remove(dish);
+    }
+
+    public void Update(Dish dish)
+    {
+        context.Dishes.Update(dish);
+    }
 }

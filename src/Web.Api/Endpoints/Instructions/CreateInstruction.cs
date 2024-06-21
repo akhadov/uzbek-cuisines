@@ -6,7 +6,7 @@ using Web.Api.Infrastructure;
 
 namespace Web.Api.Endpoints.Instructions;
 
-internal sealed class Create : IEndpoint
+internal sealed class CreateInstruction : IEndpoint
 {
     public void MapEndpoint(IEndpointRouteBuilder app)
     {

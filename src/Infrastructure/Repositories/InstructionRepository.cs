@@ -14,4 +14,14 @@ internal sealed class InstructionRepository(ApplicationDbContext context) : IIns
     {
         context.Instructions.Add(instruction);
     }
+
+    public void Remove(Instruction instruction)
+    {
+        context.Instructions.Remove(instruction);
+    }
+
+    public void Update(Instruction instruction)
+    {
+        context.Instructions.Update(instruction);
+    }
 }

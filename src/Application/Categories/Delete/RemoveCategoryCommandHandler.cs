@@ -4,11 +4,11 @@ using Domain.Categories;
 using SharedKernel;
 
 namespace Application.Categories.Delete;
-internal sealed class DeleteCategoryCommandHandler(
+internal sealed class RemoveCategoryCommandHandler(
     ICategoryRepository categoryRepository,
-    IUnitOfWork unitOfWork) : ICommandHandler<DeleteCategoryCommand>
+    IUnitOfWork unitOfWork) : ICommandHandler<RemoveCategoryCommand>
 {
-    public async Task<Result> Handle(DeleteCategoryCommand request, CancellationToken cancellationToken)
+    public async Task<Result> Handle(RemoveCategoryCommand request, CancellationToken cancellationToken)
     {
         Category? category = await categoryRepository.GetByIdAsync(request.CategoryId, cancellationToken);
 

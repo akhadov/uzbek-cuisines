@@ -8,4 +8,9 @@ internal sealed class ReviewRepository(ApplicationDbContext context) : IReviewRe
     {
         context.Reviews.Add(review);
     }
+
+    public void Remove(Review review)
+    {
+        context.Reviews.Remove(review);
+    }
 }

@@ -1,9 +1,9 @@
 ﻿using FluentValidation;
 
 namespace Application.Categories.Delete;
-internal sealed class DeleteCategoryCommandValidator : AbstractValidator<DeleteCategoryCommand>
+internal sealed class RemoveCategoryCommandValidator : AbstractValidator<RemoveCategoryCommand>
 {
-    public DeleteCategoryCommandValidator()
+    public RemoveCategoryCommandValidator()
     {
         RuleFor(c => c.CategoryId)
             .NotEmpty();

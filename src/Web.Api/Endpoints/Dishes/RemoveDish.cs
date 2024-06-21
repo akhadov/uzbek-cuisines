@@ -1,26 +1,27 @@
-﻿using Application.Categories.Delete;
+﻿
+using Application.Dishes.Remove;
 using MediatR;
 using SharedKernel;
 using Web.Api.Extensions;
 using Web.Api.Infrastructure;
 
-namespace Web.Api.Endpoints.Categories;
+namespace Web.Api.Endpoints.Dishes;
 
-internal sealed class Delete : IEndpoint
+internal sealed class RemoveDish : IEndpoint
 {
     public void MapEndpoint(IEndpointRouteBuilder app)
     {
-        app.MapDelete("categories/{categoryId}", async (
-            Guid categoryId,
+        app.MapDelete("dishes/{dishId}", async (
+            Guid dishId,
             ISender sender,
             CancellationToken cancellationToken) =>
         {
-            var query = new DeleteCategoryCommand(categoryId);
+            var query = new RemoveDishCommand(dishId);
 
             Result result = await sender.Send(query, cancellationToken);
 
             return result.Match(Results.NoContent, CustomResults.Problem);
         })
-        .WithTags(Tags.Categories);
+        .WithTags(Tags.Dishes);
     }
 }

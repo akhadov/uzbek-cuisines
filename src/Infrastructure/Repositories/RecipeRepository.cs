@@ -19,4 +19,9 @@ internal sealed class RecipeRepository(ApplicationDbContext context) : IRecipeRe
     {
         context.Recipes.Remove(recipe);
     }
+
+    public void Update(Recipe recipe)
+    {
+        context.Recipes.Update(recipe);
+    }
 }
