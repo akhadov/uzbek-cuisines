@@ -1,4 +1,4 @@
-﻿using Application.Recipes.AddIngredients;
+﻿using Application.Recipes.Remove;
 using MediatR;
 using SharedKernel;
 using Web.Api.Extensions;
@@ -6,19 +6,18 @@ using Web.Api.Infrastructure;
 
 namespace Web.Api.Endpoints.Recipes;
 
-internal sealed class AddIngredient : IEndpoint
+internal sealed class RemoveRecipe : IEndpoint
 {
     public void MapEndpoint(IEndpointRouteBuilder app)
     {
-        app.MapPost("recipes/{recipeId}/ingredients", async (
+        app.MapDelete("recipes/{recipeId}", async (
             Guid recipeId,
-            List<IngredientRequest> ingredients,
             ISender sender,
             CancellationToken cancellationToken) =>
         {
-            var command = new AddIngredientsCommand(recipeId, ingredients);
+            var query = new RemoveRecipeCommand(recipeId);
 
-            Result result = await sender.Send(command, cancellationToken);
+            Result result = await sender.Send(query, cancellationToken);
 
             return result.Match(Results.NoContent, CustomResults.Problem);
         })

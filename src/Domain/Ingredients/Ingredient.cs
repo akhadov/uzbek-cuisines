@@ -22,7 +22,7 @@ public sealed class Ingredient : Entity
 
     public Unit Unit { get; private set; }
 
-    public static Ingredient Create(
+    internal static Result<Ingredient> Create(
         Guid recipeId,
         Name name,
         decimal amount,

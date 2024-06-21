@@ -6,7 +6,7 @@ using Web.Api.Infrastructure;
 
 namespace Web.Api.Endpoints.Reviews;
 
-public class AddReview : IEndpoint
+internal sealed class AddReview : IEndpoint
 {
     public void MapEndpoint(IEndpointRouteBuilder app)
     {

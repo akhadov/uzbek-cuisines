@@ -6,7 +6,7 @@ using Web.Api.Infrastructure;
 
 namespace Web.Api.Endpoints.Categories;
 
-public class Update : IEndpoint
+internal sealed class Update : IEndpoint
 {
     public void MapEndpoint(IEndpointRouteBuilder app)
     {

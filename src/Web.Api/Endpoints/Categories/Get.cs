@@ -1,4 +1,4 @@
-﻿using Application.Categories.Delete;
+﻿using Application.Categories.GetById;
 using MediatR;
 using SharedKernel;
 using Web.Api.Extensions;
@@ -6,16 +6,16 @@ using Web.Api.Infrastructure;
 
 namespace Web.Api.Endpoints.Categories;
 
-internal sealed class Delete : IEndpoint
+internal sealed class Get : IEndpoint
 {
     public void MapEndpoint(IEndpointRouteBuilder app)
     {
-        app.MapDelete("categories/{categoryId}", async (
+        app.MapGet("categories/{categoryId}", async (
             Guid categoryId,
             ISender sender,
             CancellationToken cancellationToken) =>
         {
-            var query = new DeleteCategoryCommand(categoryId);
+            var query = new GetCategoryByIdQuery(categoryId);
 
             Result result = await sender.Send(query, cancellationToken);
 

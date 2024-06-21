@@ -55,6 +55,7 @@ public static class DependencyInjection
                 .UseNpgsql(connectionString, npgsqlOptions =>
                     npgsqlOptions.MigrationsHistoryTable(HistoryRepository.DefaultTableName, Schemas.Default))
                 .UseSnakeCaseNamingConvention());
+        //.UseQueryTrackingBehavior(QueryTrackingBehavior.NoTracking));
 
         services.AddScoped<IUnitOfWork>(sp => sp.GetRequiredService<ApplicationDbContext>());
 

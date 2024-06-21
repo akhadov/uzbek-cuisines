@@ -6,7 +6,7 @@ using Web.Api.Infrastructure;
 
 namespace Web.Api.Endpoints.Dishes;
 
-public class Create : IEndpoint
+internal sealed class Create : IEndpoint
 {
     public void MapEndpoint(IEndpointRouteBuilder app)
     {

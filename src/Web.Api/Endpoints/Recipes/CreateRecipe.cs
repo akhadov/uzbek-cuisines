@@ -6,7 +6,7 @@ using Web.Api.Infrastructure;
 
 namespace Web.Api.Endpoints.Recipes;
 
-public class Create : IEndpoint
+internal sealed class CreateRecipe : IEndpoint
 {
     public void MapEndpoint(IEndpointRouteBuilder app)
     {

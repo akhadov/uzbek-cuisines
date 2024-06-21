@@ -47,7 +47,7 @@ public sealed class Recipe : Entity
 
     public string ImagePath { get; private set; }
 
-    public List<Ingredient> Ingredients => _ingredients.ToList();
+    public IReadOnlyList<Ingredient> Ingredients => _ingredients.ToList();
 
     public static Recipe Create(
         Guid userId,
@@ -92,6 +92,20 @@ public sealed class Recipe : Entity
         }
 
         _ingredients.Add(result.Value);
+
+        return Result.Success();
+    }
+
+    public Result RemoveIngredient(Guid ingredientId)
+    {
+        Ingredient? ingredient = _ingredients.Find(i => i.Id == ingredientId);
+
+        if (ingredient is null)
+        {
+            return Result.Failure(IngredientErrors.NotFound(ingredientId));
+        }
+
+        _ingredients.Remove(ingredient);
 
         return Result.Success();
     }
