@@ -53,4 +53,10 @@ public sealed class Review : Entity
 
         return review;
     }
+
+    public void Update(Rating rating, Comment comment)
+    {
+        Rating = rating;
+        Comment = comment;
+    }
 }

@@ -75,6 +75,20 @@ public sealed class Recipe : Entity
         return recipe;
     }
 
+    public void Update(
+        Description description,
+        int prepTime,
+        int cookTime,
+        int servings,
+        string imagePath)
+    {
+        Description = description;
+        PrepTime = prepTime;
+        CookTime = cookTime;
+        Servings = servings;
+        ImagePath = imagePath;
+    }
+
     public Result AddIngredient(
         Name name,
         decimal amount,

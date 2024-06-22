@@ -30,9 +30,4 @@
     </PackageReference>
   </ItemGroup>
 
-  <ItemGroup>
-    <Folder Include="Reviews\Update\" />
-    <Folder Include="Reviews\Remove\" />
-  </ItemGroup>
-
 </Project>
