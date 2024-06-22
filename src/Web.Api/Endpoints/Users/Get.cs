@@ -21,7 +21,7 @@ public class Get : IEndpoint
 
             return result.Match(Results.Ok, CustomResults.Problem);
         })
-        .HasPermission(Permissions.UsersAccess)
+        .HasPermission(Permissions.UsersRead)
         .WithTags(Tags.Users);
     }
 }

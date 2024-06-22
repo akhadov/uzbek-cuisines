@@ -11,13 +11,18 @@ internal sealed class UserRepository(ApplicationDbContext context) : IUserReposi
         return context.Users.FirstOrDefaultAsync(u => u.Id == id, cancellationToken);
     }
 
-    public async Task<bool> IsEmailUniqueAsync(Email email)
-    {
-        return !await context.Users.AnyAsync(u => u.Email == email);
-    }
+    //public async Task<bool> IsEmailUniqueAsync(Email email)
+    //{
+    //    return !await context.Users.AnyAsync(u => u.Email == email);
+    //}
 
     public void Insert(User user)
     {
         context.Users.Add(user);
+    }
+
+    public async Task<bool> IsEmailUniqueAsync(Domain.Users.Email email)
+    {
+        return !await context.Users.AnyAsync(u => u.Email == email);
     }
 }

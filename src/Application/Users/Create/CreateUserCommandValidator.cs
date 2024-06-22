@@ -1,16 +1,16 @@
-﻿using FluentValidation;
+﻿//using FluentValidation;
 
-namespace Application.Users.Create;
+//namespace Application.Users.Create;
 
-internal sealed class CreateUserCommandValidator : AbstractValidator<CreateUserCommand>
-{
-    public CreateUserCommandValidator()
-    {
-        RuleFor(c => c.Name)
-            .NotEmpty().WithErrorCode(UserErrorCodes.CreateUser.MissingName);
+//internal sealed class CreateUserCommandValidator : AbstractValidator<CreateUserCommand>
+//{
+//    public CreateUserCommandValidator()
+//    {
+//        RuleFor(c => c.Name)
+//            .NotEmpty().WithErrorCode(UserErrorCodes.CreateUser.MissingName);
 
-        RuleFor(c => c.Email)
-            .NotEmpty().WithErrorCode(UserErrorCodes.CreateUser.MissingEmail)
-            .EmailAddress().WithErrorCode(UserErrorCodes.CreateUser.InvalidEmail);
-    }
-}
+//        RuleFor(c => c.Email)
+//            .NotEmpty().WithErrorCode(UserErrorCodes.CreateUser.MissingEmail)
+//            .EmailAddress().WithErrorCode(UserErrorCodes.CreateUser.InvalidEmail);
+//    }
+//}

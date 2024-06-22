@@ -4,12 +4,18 @@ namespace Domain.Users;
 
 public sealed class User : Entity
 {
-    private User(Guid id, Email email, Name name, bool hasPublicProfile)
+    private readonly List<Role> _roles = new();
+
+    private User(
+        Guid id,
+        Email email,
+        FirstName firstName,
+        LastName lastName)
         : base(id)
     {
         Email = email;
-        Name = name;
-        HasPublicProfile = hasPublicProfile;
+        FirstName = firstName;
+        LastName = lastName;
     }
 
     private User()
@@ -18,16 +24,27 @@ public sealed class User : Entity
 
     public Email Email { get; private set; }
 
-    public Name Name { get; private set; }
+    public FirstName FirstName { get; private set; }
 
-    public bool HasPublicProfile { get; set; }
+    public LastName LastName { get; private set; }
 
-    public static User Create(Email email, Name name, bool hasPublicProfile)
+    public string IdentityId { get; private set; } = string.Empty;
+
+    public IReadOnlyCollection<Role> Roles => _roles.ToList();
+
+    public static User Create(Email email, FirstName firstName, LastName lastName)
     {
-        var user = new User(Guid.NewGuid(), email, name, hasPublicProfile);
+        var user = new User(Guid.NewGuid(), email, firstName, lastName);
 
         user.Raise(new UserCreatedDomainEvent(user.Id));
 
+        user._roles.Add(Role.Registered);
+
         return user;
+    }
+
+    public void SetIdentityId(string identityId)
+    {
+        IdentityId = identityId;
     }
 }

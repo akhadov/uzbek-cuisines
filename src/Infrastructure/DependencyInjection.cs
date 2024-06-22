@@ -1,5 +1,7 @@
-﻿using Application.Abstractions.Caching;
+﻿using Application.Abstractions.Authentication;
+using Application.Abstractions.Caching;
 using Application.Abstractions.Data;
+using Application.Abstractions.Email;
 using Dapper;
 using Domain.Categories;
 using Domain.Dishes;
@@ -8,17 +10,27 @@ using Domain.Instructions;
 using Domain.Recipes;
 using Domain.Reviews;
 using Domain.Users;
+using Infrastructure.Authentication;
+using Infrastructure.Authorization;
 using Infrastructure.Caching;
 using Infrastructure.Data;
 using Infrastructure.Database;
+using Infrastructure.Email;
 using Infrastructure.Repositories;
 using Infrastructure.Time;
+using Microsoft.AspNetCore.Authentication;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Options;
 using Npgsql;
 using SharedKernel;
+using AuthenticationOptions = Infrastructure.Authentication.AuthenticationOptions;
+using AuthenticationService = Infrastructure.Authentication.AuthenticationService;
+using IAuthenticationService = Application.Abstractions.Authentication.IAuthenticationService;
 
 namespace Infrastructure;
 
@@ -31,11 +43,15 @@ public static class DependencyInjection
             .AddServices()
             .AddDatabase(configuration)
             .AddCaching(configuration)
-            .AddHealthChecks(configuration);
+            .AddHealthChecks(configuration)
+            .AddAuthentication(configuration)
+            .AddAuthorization();
 
     private static IServiceCollection AddServices(this IServiceCollection services)
     {
         services.AddSingleton<IDateTimeProvider, DateTimeProvider>();
+
+        services.AddTransient<IEmailService, EmailService>();
 
         return services;
     }
@@ -87,6 +103,55 @@ public static class DependencyInjection
             .AddHealthChecks()
             .AddNpgSql(configuration.GetConnectionString("Database")!)
             .AddRedis(configuration.GetConnectionString("Cache")!);
+
+        return services;
+    }
+
+    private static IServiceCollection AddAuthentication(this IServiceCollection services, IConfiguration configuration)
+    {
+        services
+            .AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
+            .AddJwtBearer();
+
+        services.Configure<AuthenticationOptions>(configuration.GetSection("Authentication"));
+
+        services.ConfigureOptions<JwtBearerOptionsSetup>();
+
+        services.Configure<KeycloakOptions>(configuration.GetSection("Keycloak"));
+
+        services.AddTransient<AdminAuthorizationDelegatingHandler>();
+
+        services.AddHttpClient<IAuthenticationService, AuthenticationService>((serviceProvider, httpClient) =>
+        {
+            KeycloakOptions keycloakOptions = serviceProvider.GetRequiredService<IOptions<KeycloakOptions>>().Value;
+
+            httpClient.BaseAddress = new Uri(keycloakOptions.AdminUrl);
+        })
+        .AddHttpMessageHandler<AdminAuthorizationDelegatingHandler>();
+
+        services.AddHttpClient<IJwtService, JwtService>((serviceProvider, httpClient) =>
+        {
+            KeycloakOptions keycloakOptions = serviceProvider.GetRequiredService<IOptions<KeycloakOptions>>().Value;
+
+            httpClient.BaseAddress = new Uri(keycloakOptions.TokenUrl);
+        });
+
+        services.AddHttpContextAccessor();
+
+        services.AddScoped<IUserContext, UserContext>();
+
+        return services;
+    }
+
+    private static IServiceCollection AddAuthorization(this IServiceCollection services)
+    {
+        services.AddScoped<AuthorizationService>();
+
+        services.AddTransient<IClaimsTransformation, CustomClaimsTransformation>();
+
+        services.AddTransient<IAuthorizationHandler, PermissionAuthorizationHandler>();
+
+        services.AddTransient<IAuthorizationPolicyProvider, PermissionAuthorizationPolicyProvider>();
 
         return services;
     }

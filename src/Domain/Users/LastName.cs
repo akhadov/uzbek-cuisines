@@ -1,10 +1,9 @@
 ﻿using SharedKernel;
 
 namespace Domain.Users;
-
-public sealed record Name
+public sealed record LastName
 {
-    public Name(string? value)
+    public LastName(string? value)
     {
         Ensure.NotNullOrEmpty(value);
 

@@ -15,7 +15,13 @@ internal sealed class UserConfiguration : IEntityTypeConfiguration<User>
             b => b.Property(e => e.Value).HasColumnName("email"));
 
         builder.ComplexProperty(
-            u => u.Name,
-            b => b.Property(e => e.Value).HasColumnName("name"));
+            u => u.FirstName,
+            b => b.Property(e => e.Value).HasColumnName("first_name"));
+
+        builder.ComplexProperty(
+            u => u.LastName,
+            b => b.Property(e => e.Value).HasColumnName("last_name"));
+
+        builder.HasIndex(user => user.IdentityId).IsUnique();
     }
 }
