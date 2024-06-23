@@ -1,4 +1,4 @@
-﻿using System.Data;
+﻿using System.Data.Common;
 using Application.Abstractions.Data;
 using Application.Abstractions.Messaging;
 using Dapper;
@@ -23,7 +23,7 @@ internal sealed class GetUserByIdQueryHandler(IDbConnectionFactory factory)
             WHERE u.id = @UserId
             """;
 
-        using IDbConnection connection = factory.GetOpenConnection();
+        await using DbConnection connection = await factory.OpenConnectionAsync();
 
         UserResponse? user = await connection.QueryFirstOrDefaultAsync<UserResponse>(
             sql,

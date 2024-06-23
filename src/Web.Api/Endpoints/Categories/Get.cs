@@ -1,4 +1,4 @@
-﻿using Application.Categories.GetById;
+﻿using Application.Categories.Get;
 using MediatR;
 using SharedKernel;
 using Web.Api.Extensions;
@@ -15,11 +15,11 @@ internal sealed class Get : IEndpoint
             ISender sender,
             CancellationToken cancellationToken) =>
         {
-            var query = new GetCategoryByIdQuery(categoryId);
+            var query = new GetCategoryQuery(categoryId);
 
-            Result result = await sender.Send(query, cancellationToken);
+            Result<CategoryResponse> result = await sender.Send(query, cancellationToken);
 
-            return result.Match(Results.NoContent, CustomResults.Problem);
+            return result.Match(Results.Ok, CustomResults.Problem);
         })
         .WithTags(Tags.Categories);
     }

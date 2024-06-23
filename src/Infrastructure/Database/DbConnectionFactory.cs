@@ -1,4 +1,4 @@
-﻿using System.Data;
+﻿using System.Data.Common;
 using Application.Abstractions.Data;
 using Npgsql;
 
@@ -6,10 +6,9 @@ namespace Infrastructure.Database;
 
 internal sealed class DbConnectionFactory(NpgsqlDataSource dataSource) : IDbConnectionFactory
 {
-    public IDbConnection GetOpenConnection()
+    public async ValueTask<DbConnection> OpenConnectionAsync()
     {
-        NpgsqlConnection connection = dataSource.OpenConnection();
-
-        return connection;
+        return await dataSource.OpenConnectionAsync();
     }
 }
+
