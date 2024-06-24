@@ -7,11 +7,7 @@
 <!-- TOC -->
 
 ## Overview
-Uzbek Cuisines was designed to solve the most important business challenges from the world of digital shopping. The goal is to provide the platform with:
-* The high performance application to handle temporary and permanent traffic overloads,
-* Highly advanced e-commerce platform with unlimited possibilities of integration with existing third-party softwares
-* Fast development with modern codebase
-* Scalable e-commerce platform to grow with the business
+National foods in Uzbek kitchens attracts everyone, it is always tasty and interesting 😋
 
 ## Features
 
