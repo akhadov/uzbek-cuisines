@@ -8,19 +8,21 @@ internal sealed class UserConfiguration : IEntityTypeConfiguration<User>
 {
     public void Configure(EntityTypeBuilder<User> builder)
     {
-        builder.HasKey(u => u.Id);
+        builder.HasKey(user => user.Id);
 
-        builder.ComplexProperty(
-            u => u.Email,
-            b => b.Property(e => e.Value).HasColumnName("email"));
+        builder.Property(user => user.FirstName)
+            .HasMaxLength(200)
+            .HasConversion(firstName => firstName.Value, value => new FirstName(value));
 
-        builder.ComplexProperty(
-            u => u.FirstName,
-            b => b.Property(e => e.Value).HasColumnName("first_name"));
+        builder.Property(user => user.LastName)
+            .HasMaxLength(200)
+            .HasConversion(firstName => firstName.Value, value => new LastName(value));
 
-        builder.ComplexProperty(
-            u => u.LastName,
-            b => b.Property(e => e.Value).HasColumnName("last_name"));
+        builder.Property(user => user.Email)
+            .HasMaxLength(400)
+            .HasConversion(email => email.Value, value => new Domain.Users.Email(value));
+
+        builder.HasIndex(user => user.Email).IsUnique();
 
         builder.HasIndex(user => user.IdentityId).IsUnique();
     }

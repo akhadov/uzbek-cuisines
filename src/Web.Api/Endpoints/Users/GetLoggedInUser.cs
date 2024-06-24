@@ -1,4 +1,5 @@
-﻿using Application.Users.GetById;
+﻿
+using Application.Users.GetLoggedInUser;
 using MediatR;
 using SharedKernel;
 using Web.Api.Extensions;
@@ -6,16 +7,15 @@ using Web.Api.Infrastructure;
 
 namespace Web.Api.Endpoints.Users;
 
-public class Get : IEndpoint
+internal sealed class GetLoggedInUser : IEndpoint
 {
     public void MapEndpoint(IEndpointRouteBuilder app)
     {
-        app.MapGet("users/{userId}", async (
-            Guid userId,
+        app.MapGet("users/me", async (
             ISender sender,
             CancellationToken cancellationToken) =>
         {
-            var query = new GetUserByIdQuery(userId);
+            var query = new GetLoggedInUserQuery();
 
             Result<UserResponse> result = await sender.Send(query, cancellationToken);
 

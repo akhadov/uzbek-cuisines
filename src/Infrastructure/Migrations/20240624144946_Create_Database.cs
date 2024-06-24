@@ -1,4 +1,5 @@
-﻿using Microsoft.EntityFrameworkCore.Migrations;
+﻿using System;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 
 #nullable disable
@@ -6,7 +7,7 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace Infrastructure.Migrations;
 
 /// <inheritdoc />
-public partial class InitialCreate : Migration
+public partial class Create_Database : Migration
 {
     /// <inheritdoc />
     protected override void Up(MigrationBuilder migrationBuilder)
@@ -62,10 +63,10 @@ public partial class InitialCreate : Migration
             columns: table => new
             {
                 id = table.Column<Guid>(type: "uuid", nullable: false),
-                identity_id = table.Column<string>(type: "text", nullable: false),
-                email = table.Column<string>(type: "text", nullable: false),
-                first_name = table.Column<string>(type: "text", nullable: false),
-                last_name = table.Column<string>(type: "text", nullable: false)
+                first_name = table.Column<string>(type: "character varying(200)", maxLength: 200, nullable: false),
+                last_name = table.Column<string>(type: "character varying(200)", maxLength: 200, nullable: false),
+                email = table.Column<string>(type: "character varying(400)", maxLength: 400, nullable: false),
+                identity_id = table.Column<string>(type: "text", nullable: false)
             },
             constraints: table => table.PrimaryKey("pk_users", x => x.id));
 
@@ -311,6 +312,13 @@ public partial class InitialCreate : Migration
             schema: "public",
             table: "role_user",
             column: "users_id");
+
+        migrationBuilder.CreateIndex(
+            name: "ix_users_email",
+            schema: "public",
+            table: "users",
+            column: "email",
+            unique: true);
 
         migrationBuilder.CreateIndex(
             name: "ix_users_identity_id",

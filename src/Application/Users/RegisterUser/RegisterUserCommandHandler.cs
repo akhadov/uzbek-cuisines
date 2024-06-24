@@ -6,7 +6,7 @@ using SharedKernel;
 
 namespace Application.Users.RegisterUser;
 internal sealed class RegisterUserCommandHandler(
-    IAuthenticationService authenticationService,
+    //IAuthenticationService authenticationService,
     IUserRepository userRepository,
     IUnitOfWork unitOfWork) : ICommandHandler<RegisterUserCommand, Guid>
 {
@@ -14,32 +14,19 @@ internal sealed class RegisterUserCommandHandler(
         RegisterUserCommand request,
         CancellationToken cancellationToken)
     {
-        Result<Email> emailResult = Email.Create(request.Email);
+        var user = User.Create(
+            new FirstName(request.FirstName),
+            new LastName(request.LastName),
+            new Email(request.Email));
 
-        if (emailResult.IsFailure)
-        {
-            return Result.Failure<Guid>(emailResult.Error);
-        }
+        //string identityId = await authenticationService.RegisterAsync(
+        //    user,
+        //    request.Password,
+        //    cancellationToken);
 
-        Email email = emailResult.Value;
-        if (!await userRepository.IsEmailUniqueAsync(email))
-        {
-            return Result.Failure<Guid>(UserErrors.EmailNotUnique);
-        }
+        //user.SetIdentityId(identityId);
 
-        var firstName = new FirstName(request.FirstName);
-        var lastName = new LastName(request.LastName);
-
-        var user = User.Create(email, firstName, lastName);
-
-        string identityId = await authenticationService.RegisterAsync(
-            user,
-            request.Password,
-            cancellationToken);
-
-        user.SetIdentityId(identityId);
-
-        userRepository.Insert(user);
+        userRepository.Add(user);
 
         await unitOfWork.SaveChangesAsync(cancellationToken);
 

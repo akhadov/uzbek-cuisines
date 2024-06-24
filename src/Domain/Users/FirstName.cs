@@ -1,15 +1,4 @@
-﻿using SharedKernel;
+﻿namespace Domain.Users;
 
-namespace Domain.Users;
+public sealed record FirstName(string Value);
 
-public sealed record FirstName
-{
-    public FirstName(string? value)
-    {
-        Ensure.NotNullOrEmpty(value);
-
-        Value = value;
-    }
-
-    public string Value { get; }
-}

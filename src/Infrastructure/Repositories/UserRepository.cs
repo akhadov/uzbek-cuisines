@@ -1,28 +1,23 @@
 ﻿using Domain.Users;
 using Infrastructure.Database;
-using Microsoft.EntityFrameworkCore;
 
 namespace Infrastructure.Repositories;
 
-internal sealed class UserRepository(ApplicationDbContext context) : IUserRepository
+internal sealed class UserRepository : Repository<User>, IUserRepository
 {
-    public Task<User?> GetByIdAsync(Guid id, CancellationToken cancellationToken = default)
+    public UserRepository(ApplicationDbContext dbContext)
+        : base(dbContext)
     {
-        return context.Users.FirstOrDefaultAsync(u => u.Id == id, cancellationToken);
     }
 
-    //public async Task<bool> IsEmailUniqueAsync(Email email)
-    //{
-    //    return !await context.Users.AnyAsync(u => u.Email == email);
-    //}
-
-    public void Insert(User user)
+    public override void Add(User user)
     {
-        context.Users.Add(user);
-    }
+        foreach (Role role in user.Roles)
+        {
+            DbContext.Attach(role);
+        }
 
-    public async Task<bool> IsEmailUniqueAsync(Domain.Users.Email email)
-    {
-        return !await context.Users.AnyAsync(u => u.Email == email);
+        DbContext.Add(user);
     }
 }
+
