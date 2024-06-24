@@ -50,26 +50,6 @@ Follow these steps to get your development environment set up:
 dotnet build
 ```
 
-### Adding a Feature
-
-1. Create a query
-
-```bash
-cd src/Application/Features
-mkdir {{FeatureName}}
-cd {{FeatureName}}
-dotnet new ssw-ca-query --name {{QueryName}} --entityName {{Entity}} --slnName {{SolutionName}}
-```
-
-2. Create a command
-
-```bash
-cd src/Application/Features
-mkdir {{FeatureName}}
-cd {{FeatureName}}
-dotnet new ssw-ca-command --name {{CommandName}} --entityName {{Entity}} --slnName {{SolutionName}}
-```
-
 ### Running the Solution
 
 1. Start dockerized PostgreSQL Server
@@ -83,11 +63,11 @@ docker compose up
 ```bash
 dotnet run
 ```
-2. Launch [https://localhost:5001/api](http://localhost:5000/api) in your browser to view the API
 
 > **NOTE:** The first time you run the solution, it may take a while to download the docker images, create the DB, and seed the data.
 
-
+Launch [https://localhost:5001/api](http://localhost:5000/api) in your browser to view the API
+   
 You should be able to make requests to localhost:5001 for the Public API project once these commands complete. If you have any problems, especially with login, try from a new guest or incognito browser instance.
 
 You can also run the applications by using the instructions located in their `Dockerfile` file in the root of each project. Again, run these commands from the root of the solution (where the .sln file is located).
