@@ -19,10 +19,11 @@ Uzbek Cuisines was designed to solve the most important business challenges from
 - Global Exception Handling
 - OpenAPI/Swagger
 - Entity Framework Core
-- Specification Pattern
+- Result Pattern
 - CQRS
 - MediatR
 - FluentValidation
+- Dapper
 
 ## Getting Started
 
