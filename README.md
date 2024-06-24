@@ -2,6 +2,7 @@
 <!-- TOC -->
 - [Overview](#overview)
     - [Features](#features)
+    - [Prerequisites](#prerequisites)
     - [Getting Started](#getting-started)
     - [Running the Solution](#running-the-solution)
 <!-- TOC -->
@@ -21,6 +22,17 @@ National foods in Uzbek kitchens attracts everyone, it is always tasty and inter
 - FluentValidation
 - Dapper
 
+## Prerequisites
+
+- Clone the eShop repository: https://github.com/dotnet/eshop
+- [Install & start Docker Desktop](https://docs.docker.com/engine/install/)
+
+### Windows with Visual Studio
+- Install [Visual Studio 2022 version 17.10 or newer](https://visualstudio.microsoft.com/vs/).
+  - Select the following workloads:
+    - `ASP.NET and web development` workload.
+    - `.NET Aspire SDK` component in `Individual components`.
+    - Optional: `.NET Multi-platform App UI development` to run client apps
 ## Getting Started
 
 ### Installation
