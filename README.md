@@ -66,7 +66,6 @@ dotnet run
 
 > **NOTE:** The first time you run the solution, it may take a while to download the docker images, create the DB, and seed the data.
 
-Launch [https://localhost:5001/api](http://localhost:5000/api) in your browser to view the API
    
 You should be able to make requests to localhost:5001 for the Public API project once these commands complete. If you have any problems, especially with login, try from a new guest or incognito browser instance.
 
