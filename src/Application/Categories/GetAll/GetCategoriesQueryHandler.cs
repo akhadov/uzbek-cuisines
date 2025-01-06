@@ -31,11 +31,10 @@ internal sealed class GetCategoriesQueryHandler(IDbConnectionFactory dbConnectio
 
         int totalCount = await connection.ExecuteScalarAsync<int>(countSql);
 
-#pragma warning disable IDE0008 // Use explicit type
 #pragma warning disable IDE0037 // Use inferred member name
-        var categories = await connection.QueryAsync<CategoryResponse>(sql, new { Offset = (request.PageNumber - 1) * request.PageSize, PageSize = request.PageSize });
+        IEnumerable<CategoryResponse> categories = await connection.QueryAsync<CategoryResponse>(sql, new { Offset = (request.PageNumber - 1) * request.PageSize, PageSize = request.PageSize });
 #pragma warning restore IDE0037 // Use inferred member name
-#pragma warning restore IDE0008 // Use explicit type
+
 
         var paginatedCategories = new PaginatedList<CategoryResponse>(categories.ToList(), totalCount, request.PageNumber, request.PageSize);
 

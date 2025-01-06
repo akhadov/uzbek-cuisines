@@ -7,8 +7,8 @@ public sealed class User : Entity
     private readonly List<Role> _roles = new();
 
     private User(Guid id, FirstName firstName, LastName lastName, Email email)
-        : base(id)
     {
+        Id = id;
         FirstName = firstName;
         LastName = lastName;
         Email = email;
@@ -17,6 +17,8 @@ public sealed class User : Entity
     private User()
     {
     }
+
+    public Guid Id { get; private set; }
 
     public FirstName FirstName { get; private set; }
 

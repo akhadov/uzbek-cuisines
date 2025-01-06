@@ -1,23 +1,24 @@
 ﻿using Domain.Users;
 using Infrastructure.Database;
+using Microsoft.EntityFrameworkCore;
 
 namespace Infrastructure.Repositories;
 
-internal sealed class UserRepository : Repository<User>, IUserRepository
+internal sealed class UserRepository(ApplicationDbContext context) : IUserRepository
 {
-    public UserRepository(ApplicationDbContext dbContext)
-        : base(dbContext)
-    {
-    }
-
-    public override void Add(User user)
+    public void Add(User user)
     {
         foreach (Role role in user.Roles)
         {
-            DbContext.Attach(role);
+            context.Attach(role);
         }
 
-        DbContext.Add(user);
+        context.Add(user);
+    }
+
+    public Task<User?> GetByIdAsync(Guid id, CancellationToken cancellationToken = default)
+    {
+        return context.Users.FirstOrDefaultAsync(u => u.Id == id, cancellationToken);
     }
 }
 

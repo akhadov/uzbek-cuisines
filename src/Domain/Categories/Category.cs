@@ -5,12 +5,14 @@ namespace Domain.Categories;
 public sealed class Category : Entity
 {
     private Category(Guid id, Name name)
-        : base(id)
     {
+        Id = id;
         Name = name;
     }
 
     private Category() { }
+
+    public Guid Id { get; private set; }
 
     public Name Name { get; private set; }
 

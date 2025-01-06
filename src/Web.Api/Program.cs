@@ -63,4 +63,7 @@ app.MapControllers();
 await app.RunAsync();
 
 // REMARK: Required for functional and integration tests to work.
-public partial class Program;
+namespace Web.Api
+{
+    public partial class Program;
+}

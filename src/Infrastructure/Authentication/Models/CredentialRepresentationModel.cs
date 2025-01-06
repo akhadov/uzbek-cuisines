@@ -1,5 +1,5 @@
 ﻿namespace Infrastructure.Authentication.Models;
-internal class CredentialRepresentationModel
+public class CredentialRepresentationModel
 {
     public string Algorithm { get; set; }
 

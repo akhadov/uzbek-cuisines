@@ -4,8 +4,8 @@ namespace Domain.Ingredients;
 public sealed class Ingredient : Entity
 {
     private Ingredient(Guid id, Guid recipeId, Name name, decimal amount, Unit unit)
-        : base(id)
     {
+        Id = id;
         RecipeId = recipeId;
         Name = name;
         Amount = amount;
@@ -13,6 +13,8 @@ public sealed class Ingredient : Entity
     }
 
     private Ingredient() { }
+
+    public Guid Id { get; private set; }
 
     public Guid RecipeId { get; private set; }
 

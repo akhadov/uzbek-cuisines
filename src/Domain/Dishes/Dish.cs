@@ -5,12 +5,14 @@ namespace Domain.Dishes;
 public sealed class Dish : Entity
 {
     private Dish(Guid id, string name)
-        : base(id)
     {
+        Id = id;
         Name = name;
     }
 
     private Dish() { }
+
+    public Guid Id { get; private set; }
 
     public string Name { get; private set; }
 

@@ -17,8 +17,8 @@ public sealed class Recipe : Entity
         int cookTime,
         int servings,
         string imagePath)
-        : base(id)
     {
+        Id = id;
         UserId = userId;
         DishId = dishId;
         CategoryId = categoryId;
@@ -30,6 +30,8 @@ public sealed class Recipe : Entity
     }
 
     private Recipe() { }
+
+    public Guid Id { get; private set; }
 
     public Guid UserId { get; private set; }
 

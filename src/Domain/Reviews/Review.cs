@@ -12,8 +12,8 @@ public sealed class Review : Entity
         Rating rating,
         Comment comment,
         DateTime createdOnUtc)
-        : base(id)
     {
+        Id = id;
         RecipeId = recipeId;
         UserId = userId;
         Rating = rating;
@@ -24,6 +24,8 @@ public sealed class Review : Entity
     private Review()
     {
     }
+
+    public Guid Id { get; private set; }
 
     public Guid RecipeId { get; private set; }
 

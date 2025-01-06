@@ -5,8 +5,8 @@ namespace Domain.Instructions;
 public sealed class Instruction : Entity
 {
     private Instruction(Guid id, Guid recipeId, int stepNumber, Description description)
-        : base(id)
     {
+        Id = id;
         RecipeId = recipeId;
         StepNumber = stepNumber;
         Description = description;
@@ -14,8 +14,12 @@ public sealed class Instruction : Entity
 
     private Instruction() { }
 
+    public Guid Id { get; private set; }
+
     public Guid RecipeId { get; private set; }
+
     public int StepNumber { get; private set; }
+
     public Description Description { get; private set; }
 
     public static Instruction Create(Guid recipeId, int stepNumber, Description description)
