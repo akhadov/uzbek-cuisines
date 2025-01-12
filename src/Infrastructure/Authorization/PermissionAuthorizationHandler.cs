@@ -3,31 +3,29 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.Extensions.DependencyInjection;
 
 namespace Infrastructure.Authorization;
-internal sealed class PermissionAuthorizationHandler : AuthorizationHandler<PermissionRequirement>
+internal sealed class PermissionAuthorizationHandler(IServiceScopeFactory serviceScopeFactory)
+    : AuthorizationHandler<PermissionRequirement>
 {
-    private readonly IServiceProvider _serviceProvider;
-
-    public PermissionAuthorizationHandler(IServiceProvider serviceProvider)
-    {
-        _serviceProvider = serviceProvider;
-    }
-
     protected override async Task HandleRequirementAsync(
         AuthorizationHandlerContext context,
         PermissionRequirement requirement)
     {
-        if (context.User.Identity is not { IsAuthenticated: true })
+        // TODO: You definitely want to reject unauthenticated users here.
+        if (context.User is { Identity.IsAuthenticated: true })
         {
+            // TODO: Remove this call when you implement the PermissionProvider.GetForUserIdAsync
+            context.Succeed(requirement);
+
             return;
         }
 
-        using IServiceScope scope = _serviceProvider.CreateScope();
+        using IServiceScope scope = serviceScopeFactory.CreateScope();
 
-        AuthorizationService authorizationService = scope.ServiceProvider.GetRequiredService<AuthorizationService>();
+        PermissionProvider permissionProvider = scope.ServiceProvider.GetRequiredService<PermissionProvider>();
 
-        string identityId = context.User.GetIdentityId();
+        Guid userId = context.User.GetUserId();
 
-        HashSet<string> permissions = await authorizationService.GetPermissionsForUserAsync(identityId);
+        HashSet<string> permissions = await permissionProvider.GetForUserIdAsync(userId);
 
         if (permissions.Contains(requirement.Permission))
         {
@@ -35,3 +33,4 @@ internal sealed class PermissionAuthorizationHandler : AuthorizationHandler<Perm
         }
     }
 }
+

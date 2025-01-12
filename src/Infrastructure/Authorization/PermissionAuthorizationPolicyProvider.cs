@@ -30,3 +30,4 @@ internal sealed class PermissionAuthorizationPolicyProvider : DefaultAuthorizati
         return permissionPolicy;
     }
 }
+

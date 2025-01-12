@@ -1,12 +1,16 @@
-﻿using Microsoft.AspNetCore.Authorization;
+﻿using Infrastructure.Authentication;
+using Microsoft.AspNetCore.Authorization;
+using Microsoft.Extensions.DependencyInjection;
 
 namespace Infrastructure.Authorization;
-#pragma warning disable S3993 // Custom attributes should be marked with "System.AttributeUsageAttribute"
+
+[AttributeUsage(AttributeTargets.Class | AttributeTargets.Method, AllowMultiple = true)]
 public sealed class HasPermissionAttribute : AuthorizeAttribute
-#pragma warning restore S3993 // Custom attributes should be marked with "System.AttributeUsageAttribute"
 {
     public HasPermissionAttribute(string permission)
         : base(permission)
     {
     }
 }
+
+

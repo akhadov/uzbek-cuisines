@@ -1,5 +1,4 @@
 ﻿using Application.Abstractions.Messaging;
 
 namespace Application.Users.LogInUser;
-public sealed record LogInUserCommand(string Email, string Password)
-    : ICommand<AccessTokenResponse>;
+public sealed record LoginUserCommand(string Email, string Password) : ICommand<string>;

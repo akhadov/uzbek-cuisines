@@ -8,12 +8,13 @@ internal sealed class UserRepository(ApplicationDbContext context) : IUserReposi
 {
     public void Add(User user)
     {
-        foreach (Role role in user.Roles)
-        {
-            context.Attach(role);
-        }
-
         context.Add(user);
+    }
+
+    public async Task<User?> GetByEmailAsync(string email, CancellationToken cancellationToken = default)
+    {
+        return await context.Users.AsNoTracking()
+                        .SingleOrDefaultAsync(u => u.Email == email, cancellationToken);
     }
 
     public Task<User?> GetByIdAsync(Guid id, CancellationToken cancellationToken = default)

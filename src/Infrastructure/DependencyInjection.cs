@@ -1,4 +1,5 @@
-﻿using Application.Abstractions.Authentication;
+﻿using System.Text;
+using Application.Abstractions.Authentication;
 using Application.Abstractions.Caching;
 using Application.Abstractions.Data;
 using Application.Abstractions.Email;
@@ -15,7 +16,6 @@ using Infrastructure.Authorization;
 using Infrastructure.Caching;
 using Infrastructure.Data;
 using Infrastructure.Database;
-using Infrastructure.Email;
 using Infrastructure.Repositories;
 using Infrastructure.Time;
 using Microsoft.AspNetCore.Authentication;
@@ -26,11 +26,9 @@ using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Options;
+using Microsoft.IdentityModel.Tokens;
 using Npgsql;
 using SharedKernel;
-using AuthenticationOptions = Infrastructure.Authentication.AuthenticationOptions;
-using AuthenticationService = Infrastructure.Authentication.AuthenticationService;
-using IAuthenticationService = Application.Abstractions.Authentication.IAuthenticationService;
 
 namespace Infrastructure;
 
@@ -44,14 +42,12 @@ public static class DependencyInjection
             .AddDatabase(configuration)
             .AddCaching(configuration)
             .AddHealthChecks(configuration)
-            .AddAuthentication(configuration)
-            .AddAuthorization();
+            .AddAuthenticationInternal(configuration)
+            .AddAuthorizationInternal();
 
     private static IServiceCollection AddServices(this IServiceCollection services)
     {
         services.AddSingleton<IDateTimeProvider, DateTimeProvider>();
-
-        services.AddTransient<IEmailService, EmailService>();
 
         return services;
     }
@@ -101,53 +97,41 @@ public static class DependencyInjection
         services
             .AddHealthChecks()
             .AddNpgSql(configuration.GetConnectionString("Database")!)
-            .AddRedis(configuration.GetConnectionString("Cache")!)
-            .AddUrlGroup(new Uri(configuration["KeyCloak:BaseUrl"]!), HttpMethod.Get, "keycloak");
+            .AddRedis(configuration.GetConnectionString("Cache")!);
 
         return services;
     }
 
-    private static IServiceCollection AddAuthentication(this IServiceCollection services, IConfiguration configuration)
+    private static IServiceCollection AddAuthenticationInternal(
+        this IServiceCollection services,
+        IConfiguration configuration)
     {
-        services
-            .AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
-            .AddJwtBearer();
-
-        services.Configure<AuthenticationOptions>(configuration.GetSection("Authentication"));
-
-        services.ConfigureOptions<JwtBearerOptionsSetup>();
-
-        services.Configure<KeycloakOptions>(configuration.GetSection("Keycloak"));
-
-        services.AddTransient<AdminAuthorizationDelegatingHandler>();
-
-        services.AddHttpClient<IAuthenticationService, AuthenticationService>((serviceProvider, httpClient) =>
-        {
-            KeycloakOptions keycloakOptions = serviceProvider.GetRequiredService<IOptions<KeycloakOptions>>().Value;
-
-            httpClient.BaseAddress = new Uri(keycloakOptions.AdminUrl);
-        })
-        .AddHttpMessageHandler<AdminAuthorizationDelegatingHandler>();
-
-        services.AddHttpClient<IJwtService, JwtService>((serviceProvider, httpClient) =>
-        {
-            KeycloakOptions keycloakOptions = serviceProvider.GetRequiredService<IOptions<KeycloakOptions>>().Value;
-
-            httpClient.BaseAddress = new Uri(keycloakOptions.TokenUrl);
-        });
+        services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
+            .AddJwtBearer(o =>
+            {
+                o.RequireHttpsMetadata = false;
+                o.TokenValidationParameters = new TokenValidationParameters
+                {
+                    IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(configuration["Jwt:Secret"]!)),
+                    ValidIssuer = configuration["Jwt:Issuer"],
+                    ValidAudience = configuration["Jwt:Audience"],
+                    ClockSkew = TimeSpan.Zero
+                };
+            });
 
         services.AddHttpContextAccessor();
-
         services.AddScoped<IUserContext, UserContext>();
+        services.AddSingleton<IPasswordHasher, PasswordHasher>();
+        services.AddSingleton<ITokenProvider, TokenProvider>();
 
         return services;
     }
 
-    private static IServiceCollection AddAuthorization(this IServiceCollection services)
+    private static IServiceCollection AddAuthorizationInternal(this IServiceCollection services)
     {
-        services.AddScoped<AuthorizationService>();
+        services.AddAuthorization();
 
-        services.AddTransient<IClaimsTransformation, CustomClaimsTransformation>();
+        services.AddScoped<PermissionProvider>();
 
         services.AddTransient<IAuthorizationHandler, PermissionAuthorizationHandler>();
 

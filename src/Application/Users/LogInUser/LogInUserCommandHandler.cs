@@ -2,25 +2,34 @@
 using Application.Abstractions.Messaging;
 using Domain.Users;
 using SharedKernel;
+using static Microsoft.EntityFrameworkCore.DbLoggerCategory.Database;
 
 namespace Application.Users.LogInUser;
 internal sealed class LogInUserCommandHandler(
-    IJwtService jwtService) : ICommandHandler<LogInUserCommand, AccessTokenResponse>
+    IUserRepository userRepository,
+    IPasswordHasher passwordHasher,
+    ITokenProvider tokenProvider) : ICommandHandler<LoginUserCommand, string>
 {
-    public async Task<Result<AccessTokenResponse>> Handle(
-        LogInUserCommand request,
+    public async Task<Result<string>> Handle(
+        LoginUserCommand request,
         CancellationToken cancellationToken)
     {
-        Result<string> result = await jwtService.GetAccessTokenAsync(
-            request.Email,
-            request.Password,
-            cancellationToken);
+        User? user = await userRepository.GetByEmailAsync(request.Email, cancellationToken);
 
-        if (result.IsFailure)
+        if (user is null)
         {
-            return Result.Failure<AccessTokenResponse>(UserErrors.InvalidCredentials);
+            return Result.Failure<string>(UserErrors.NotFoundByEmail);
         }
 
-        return new AccessTokenResponse(result.Value);
+        bool verified = passwordHasher.Verify(request.Password, user.PasswordHash);
+
+        if (!verified)
+        {
+            return Result.Failure<string>(UserErrors.NotFoundByEmail);
+        }
+
+        string token = tokenProvider.Create(user);
+
+        return token;
     }
 }

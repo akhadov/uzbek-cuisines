@@ -3,10 +3,11 @@ using Application.Abstractions.Data;
 using Application.Abstractions.Messaging;
 using Domain.Users;
 using SharedKernel;
+using static Microsoft.EntityFrameworkCore.DbLoggerCategory.Database;
 
 namespace Application.Users.RegisterUser;
 internal sealed class RegisterUserCommandHandler(
-    //IAuthenticationService authenticationService,
+    IPasswordHasher passwordHasher,
     IUserRepository userRepository,
     IUnitOfWork unitOfWork) : ICommandHandler<RegisterUserCommand, Guid>
 {
@@ -14,17 +15,13 @@ internal sealed class RegisterUserCommandHandler(
         RegisterUserCommand request,
         CancellationToken cancellationToken)
     {
+        string passwordHash = passwordHasher.Hash(request.Password);
+
         var user = User.Create(
-            new FirstName(request.FirstName),
-            new LastName(request.LastName),
-            new Email(request.Email));
-
-        //string identityId = await authenticationService.RegisterAsync(
-        //    user,
-        //    request.Password,
-        //    cancellationToken);
-
-        //user.SetIdentityId(identityId);
+            request.Email,
+            request.FirstName,
+            request.LastName,
+            passwordHash);
 
         userRepository.Add(user);
 
