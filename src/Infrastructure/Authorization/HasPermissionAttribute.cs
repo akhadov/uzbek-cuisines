@@ -1,6 +1,4 @@
-﻿using Infrastructure.Authentication;
-using Microsoft.AspNetCore.Authorization;
-using Microsoft.Extensions.DependencyInjection;
+﻿using Microsoft.AspNetCore.Authorization;
 
 namespace Infrastructure.Authorization;
 

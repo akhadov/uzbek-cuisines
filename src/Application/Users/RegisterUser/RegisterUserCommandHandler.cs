@@ -3,7 +3,6 @@ using Application.Abstractions.Data;
 using Application.Abstractions.Messaging;
 using Domain.Users;
 using SharedKernel;
-using static Microsoft.EntityFrameworkCore.DbLoggerCategory.Database;
 
 namespace Application.Users.RegisterUser;
 internal sealed class RegisterUserCommandHandler(

@@ -7,22 +7,22 @@ using Web.Api.Infrastructure;
 
 namespace Web.Api.Endpoints.Users;
 
-internal sealed class LogIn : IEndpoint
+internal sealed class Login : IEndpoint
 {
     public void MapEndpoint(IEndpointRouteBuilder app)
     {
         app.MapPost("users/login", async (
-            LogInUserRequest request,
+            LoginUserRequest request,
             ISender sender,
             CancellationToken cancellationToken) =>
         {
-            var command = new LogInUserCommand(
+            var command = new LoginUserCommand(
                 request.Email,
                 request.Password);
 
-            Result result = await sender.Send(command, cancellationToken);
+            Result<string> result = await sender.Send(command, cancellationToken);
 
-            return result.Match(Results.NoContent, CustomResults.Problem);
+            return result.Match(Results.Ok, CustomResults.Problem);
         })
         .AllowAnonymous()
         .WithTags(Tags.Users);

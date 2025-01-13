@@ -4,7 +4,7 @@ namespace Domain.Users;
 
 public sealed class User : Entity
 {
-    private User(Guid id, string email, string firstName, string lastName,  string passwordHash)
+    private User(Guid id, string email, string firstName, string lastName, string passwordHash)
     {
         Id = id;
         Email = email;

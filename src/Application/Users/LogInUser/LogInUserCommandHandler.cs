@@ -2,10 +2,9 @@
 using Application.Abstractions.Messaging;
 using Domain.Users;
 using SharedKernel;
-using static Microsoft.EntityFrameworkCore.DbLoggerCategory.Database;
 
 namespace Application.Users.LogInUser;
-internal sealed class LogInUserCommandHandler(
+internal sealed class LoginUserCommandHandler(
     IUserRepository userRepository,
     IPasswordHasher passwordHasher,
     ITokenProvider tokenProvider) : ICommandHandler<LoginUserCommand, string>

@@ -2,6 +2,6 @@
 
 internal static class Permissions
 {
-    public const string UsersRead = "users:read";
+    internal const string UsersAccess = "users:access";
 }
 

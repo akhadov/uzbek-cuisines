@@ -1,2 +1,2 @@
 ﻿namespace Application.Users.LogInUser;
-public sealed record LogInUserRequest(string Email, string Password);
+public sealed record LoginUserRequest(string Email, string Password);
